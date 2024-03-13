@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我的技术与生活——网络通信与互联 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/imgs/shortcut-icon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/public.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/iconfont.css" />
+  <link rel="stylesheet" href="/css/APlayer.min.css" />
+  <script src="/js/APlayer.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery.pjax.min.js"></script>
+
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script>
+    document.title = `我的技术与生活——网络通信与互联`
+  </script>
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<style>
+  .load {
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(37, 35, 40);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 9999;
+  }
+  .load-circle {
+    width: 80px;
+    height: 80px;
+    border: 8px solid orange;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotate 1s linear infinite;
+    filter: drop-shadow(0 0 3px orange);
+  }
+  .load-circle-inner {
+    width: 40px;
+    height: 40px;
+    border: 8px solid orange;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate-reverse .5s linear infinite;
+  }
+  .load-text {
+    margin-top: 20px;
+    font-size: 24px;
+    color: orange;
+    display: flex;
+  }
+  .load-text span {
+    margin: 0 5px;
+    text-shadow: 5px 5px 5px orange;
+    animation: move 1s linear infinite;
+  }
+  .load-text span:nth-child(1) {
+    animation-delay: -0.6s;
+  }
+  .load-text span:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  .load-text span:nth-child(3) {
+    animation-delay: -0.4s;
+  }
+  .load-text span:nth-child(4) {
+    animation-delay: -0.3s;
+  }
+  .load-text span:nth-child(5) {
+    animation-delay: -0.2s;
+  }
+  .load-text span:nth-child(6) {
+    animation-delay: -0.1s;
+  }
+  @keyframes rotate {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes rotate-reverse {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(-360deg); }
+  }
+  @keyframes move {
+    0% { transform: translateY(0%) rotate(0) scale(1); }
+    20% { transform: translateY(20%) rotate(10deg) scale(1.2); }
+    80% { transform: translateY(-10%) rotate(-20deg) scale(.8);}
+    100% { transform: translateY(0) rotate(0) scale(1); }
+  }
+
+  .progress {
+    position: fixed;
+    left: 0; top: 0;
+    width: 0;
+    height: 3px;
+    background-color: green;
+    transition: all cubic-bezier(0.215, 0.610, 0.355, 1) .1s;
+    z-index: 9999;
+  }
+
+  .to-up {
+    animation: toUp .5s 1;
+  }
+  .gray {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: none;
+    pointer-events: none;
+    background-color: #000;
+    mix-blend-mode: color;
+  }
+  @keyframes toUp {
+    from { transform: translateY(15px); opacity: 0; }
+    to { transform: translateY(0) ; opacity: 1; }
+  }
+</style>
+<body>
+  <div id="load" class="load">
+    <div class="load-circle">
+      <div class="load-circle-inner"></div>
+    </div>
+    <p class="load-text">
+      <span>L</span>
+      <span>O</span>
+      <span>A</span>
+      <span>D</span>
+      <span>I</span>
+      <span>N</span>
+      <span>G</span>
+    </p>
+  </div>
+  <div id="container" class="container w-100 vh-100" style="display: none;">
+    <header class="header">
+  <div class="header-wrapper">
+    <div class="header-left">
+      <div class="header-search">
+        <input id="search-input" type="text" class="header-search--input" placeholder="请输入要检索的文章标题" />
+        <span id="search-btn" class="header-search--icon"><i class="iconfont icon-sousuo"></i></span>
+      </div>
+      <div id="search-layer" class="header-search--layer hidden">
+        <p class="title">
+          <span>以下是搜索内容：</span>
+          <span id="close-layer-btn">关闭</span>
+        </p>
+        <ul>
+        </ul>
+      </div>
+    </div>
+    <div class="header-right">
+      <ul class="header-menu">
+        <li>
+          <a href="http://example.com/">
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+            <span class="header-menu--span">首页</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/log">
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+            <span class="header-menu--span">日志</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/link">
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+            <span class="header-menu--span">友情链接</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/about">
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+            <span class="header-menu--span">关于我</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const ipt = document.querySelector('#search-input')
+  const btn = document.querySelector('#search-btn')
+  const layer = document.querySelector('#search-layer')
+  const posts = JSON.parse(`[{"title":"Linux","path":"2024/03/13/Linux/"},{"title":"Sqlmap工具使用","path":"2024/03/14/Sqlmap工具使用/"},{"title":"c++学习手册","path":"2024/03/13/c-学习手册/"},{"title":"python-netcoding","path":"2024/03/14/python-netcoding/"},{"title":"安全产品","path":"2024/03/13/安全产品/"},{"title":"渗透测试基础","path":"2024/03/13/渗透测试基础/"},{"title":"相关应用层服务","path":"2024/03/13/相关应用层服务/"},{"title":"网络通信与互联","path":"2024/03/13/网络通信与互联/"}]`)
+  ipt.addEventListener('keyup', e => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  })
+  btn.addEventListener('click', () => {
+    handleSearch()
+  })
+
+  document.querySelector('#close-layer-btn').addEventListener('click', () => {
+    layer.classList.toggle('hidden')
+  })
+
+  function handleSearch() {
+    if (ipt.value.trim() === '') {
+      return
+    }
+    let html = ''
+    const targetPosts = posts.filter(post => post.title.includes(ipt.value))
+    targetPosts.forEach(post => {
+      html += `
+        <li>
+          <div>
+            <a href="/${post.path}">${post.title.replace(new RegExp(ipt.value), `<span>${ipt.value}</span>`)}</a>
+          </div>
+          <img src="${post.cover || '/imgs/default-cover.webp' }" />
+        </li>
+      `
+    })
+    if (html.trim () === '') {
+      html += '<p class="empty">没有搜索到内容</p>'
+    }
+    layer.querySelector('ul').innerHTML = html
+    layer.classList.remove('hidden')
+  }
+</script> 
+    <section id="main" class="main">
+      <div class="main-left-wrapper">
+<div class="main-left">
+  <div class="main-left--block">
+    <div class="main-left--info">
+      <img src="/imgs/avatar.jpg"" class="main-left--avatar" />
+      <div class="main-left--intro">
+        <p class="main-left--name">Cola.</p>
+        <div class="main-left--tags">
+          <span class="main-left--tag">中二</span>
+          <span class="main-left--tag">宅</span>
+        </div>
+      </div>
+    </div>
+  
+    <div>
+      <div class="main-left--motto">
+        <p>“花有重开日，人无再少年”</p>
+        <p>“一个简单普通的男孩”</p>
+      </div>
+      <div class="main-left--github">
+        <span class="line"></span>
+        <a target="_blank" rel="noopener" href="https://github.com/Aizener"><i class="logo iconfont icon-github-fill"></i></a>
+        <span class="line"></span>
+      </div>
+      <div class="main-left--statics">
+        <a href="/categories">
+          <div>
+            <span>0</span>
+            <span>分类</span>
+          </div>
+        </a>
+        <a href="/tags">
+          <div>
+            <span>2</span>
+            <span>标签</span>
+          </div>
+        </a>
+        <a href="/archives">
+          <div>
+            <span>1 </span>
+            <span>归档</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-left--block">
+    <ul class="main-left--menu">
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">小站首页</span>
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/log">
+            <span class="header-menu--span">个人日志</span>
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/link">
+            <span class="header-menu--span">友情链接</span>
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/about">
+            <span class="header-menu--span">关于自己</span>
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/tools">
+            <span class="header-menu--span">我的工具</span>
+            <i class="header-menu--icon iconfont icon-gongju"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="main-left--block">
+    <div class="main-left--site">
+      <h5 class="main-left--title">
+        <span>站点信息</span>
+        <i class="iconfont icon-zhandian"></i>
+      </h5>
+      <p class="main-left--subtitle">
+        <span>文章数目：</span>
+        <span>8 篇</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>最近动态：</span>
+        <span>今天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>上线时间：</span>
+        <span>757天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>当前版本：</span>
+        <span>v1.0.2</span>
+      </p>
+    </div>
+  </div>
+</div></div>
+      <div id="main-container" class="main-container">
+
+
+  <link rel="stylesheet" href="/css/partial/article.css" />
+
+<div class="article-container">
+  <div class="article">
+    <h1 class="article-title">网络通信与互联</h1>
+    <div class="article-info">
+      <div class="article-info--item">
+        <div class="article-info--info">
+          
+          <div class="article-info--categories">
+            <span>分类：</span>
+            
+          </div>
+          
+          
+          <div class="article-info--tags">
+            <span>标签：</span>
+            
+          </div>
+          
+          <p class="article-info--date">日期：2024-03-13 23:06:23</p>
+        </div>
+        <img src="/imgs/default-cover.webp" alt="" class="article-cover">
+      </div>
+    </div>
+    <article class="article-content markdown-body">
+      <p> tcp&#x2F;ip模型  </p>
+<ul>
+<li>应用层</li>
+<li>传输层</li>
+<li>网络层</li>
+<li>数据链路层</li>
+<li>物理层Ip地址A类地址 0.0.0.0<del>127.255.255.255<br>B 类地址128.0.0.0</del>191.255.255.255<br>C类地址 192.0.0.0<del>223.255.255.255<br>私有地址即不能访问外网<br>10.0.0.0</del>10.255.255.255<br>172.16.0.0<del>172.31.255.255<br>192.168.0.0</del>192.168.255.55<br>CIDR(无分类地址)<br>路由聚合<br>172.168.10.0&#x2F;24<br>172.168.11.0&#x2F;24<br>172.168.12.0&#x2F;24<br>三个子网中相同部分为172.168<br>对比后面的<br>00001010<br>00001011<br>00001100<br>所以从1处开始划分，00001 000.0聚合之后为172.168.8.0&#x2F;21<br>避免路由环路 ip router-static 目标地址  NULL0<br> ip子网划分</li>
+</ul>
+<hr>
+<p>ip地址由“网络号+主机号”，共32位，其中A类地址网络号为8位，B类地址网络号为16位，C类地址网络号为24位。<br>子网划分是通过借用主机号来划分多个子网来实现不同场合应用，其中子网掩码是通过网络号位数与借用的主机号位数来确定</p>
+<p> 网络互联   若链接网络的设备处于同一个网段则两者之间可以通过交换机进行通信，若不处于一个网段则需要通过路由器来进行相应的链接。  </p>
+<p> 路由协议<br> 实验1:通过修改路由表来实现不同网段的通信设备互联  （静态路由）1. 首先有两台主机ip分别是192.168.10.1&#x2F;24与172.16.1.1&#x2F;16 ，还有一台远程主机ip为10.10.10.1&#x2F;24 ，通过路由器来实现上述三台主机之间的互通<br> **步骤一：上述主机的拓扑图如下  **<br><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1682343800606-de632607-446c-405b-8291-0b9327eea5f2.png" alt="1682343800606-de632607-446c-405b-8291-0b9327eea5f2"></p>
+<p><strong>步骤二：由于PC1与PC2处于不同的网段所以需要通过路由器来实现互联，因此手动修改路由信息，如下图所示</strong><br><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1682344615453-41a4ec76-dee0-4c03-b042-698902707607.png" alt="1682344615453-41a4ec76-dee0-4c03-b042-698902707607"></p>
+<p>通过修改R1的接口实现了PC1与PC2的通信</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//对于pc1接口</span><br><span class="line">interface e0/0/0</span><br><span class="line">ip address 192.168.1.254 24</span><br><span class="line">//对于pc2接口</span><br><span class="line">interface E0/0/1</span><br><span class="line">ip address  172.16.1.254 16</span><br></pre></td></tr></table></figure>
+
+<p>步骤三：通过设置静态路由实现教学楼A与教学楼B主机之间的通信，如下图<br>1.首先设置R2的pc3接口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">interface e0/0/0</span><br><span class="line">ip address 10.10.10.254 24</span><br></pre></td></tr></table></figure>
+
+<p>2.设置两个路由器之间得接口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//R1</span><br><span class="line">interface g0/0/0</span><br><span class="line">ip address 11.1.1.1 30</span><br><span class="line">//R2</span><br><span class="line">interface  g0/0/1</span><br><span class="line">ip address 11.1.1.2 30</span><br></pre></td></tr></table></figure>
+
+<p>3.设置静态路由使得教学楼主机发送的数据包可以通过路由器R1进行转发到R2再转发到教学楼B的主机上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//R1</span><br><span class="line">ip route-static 10.10.10.0 24 11.1.1.2   #其中10.10.10.0 为网络地址其他地方同此</span><br><span class="line">//R2</span><br><span class="line">ip route-static 192.168.1.0 24 11.1.1.1 </span><br><span class="line">ip route-static 172.16.1.0 24 11.1.1.1 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1682347985902-86a7ae6f-f2d6-4a92-9799-0c5356c94105.png" alt="1682347985902-86a7ae6f-f2d6-4a92-9799-0c5356c94105"></p>
+<p>缺省路由（默认路由） 0.0.0.0 0  下一跳地址</p>
+<p>路由优先级设置（浮动路由）1.若两个路由之间有两条链路，请设置一个主路由和一个备份路由（两条链路的优先级是一样的）<br><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1682393581835-0db417ec-6ee1-4594-979e-3af2c86673c9.png" alt="1682393581835-0db417ec-6ee1-4594-979e-3af2c86673c9"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//设置如下，规定11.1.1.1 11.1.1.2 为主链路</span><br><span class="line">ip route-static  10.10.10.0 24 21.1.1.2 preference 100 #降低21.1.1.2链路的优先级</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1682393887265-582d0b8a-3626-4bce-bd1e-b60fb6d2b671.png" alt="1682393887265-582d0b8a-3626-4bce-bd1e-b60fb6d2b671"></p>
+<p><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1682393792886-0ecdb7fa-ecd9-4fae-b7cc-c81422b74419.png" alt="1682393792886-0ecdb7fa-ecd9-4fae-b7cc-c81422b74419"></p>
+<p>对比可以看到21.1.1.2不在显示，作为备份链路，同理R4也是一样<br>动态路由（ospf）<br>为什么要使用动态路由协议？<br>1.无法适应规模较大的网络<br>2.无法动态响应网络变化<br>动态路由分类：<br>按工作区域划分：IGP(内部网关协议) EGP(外部网关协议)<br>按工作机制划分：距离矢量路由协议，链路状态路由协议<br>​<br>ospf工作原理：<br>ospf area： 将一个网络划分多个区域，减轻泛洪<br>router-id： 唯一标识一个路由器<br>度量值(cost)： 每一个激活了ospf接口都会维护一个cost值，不同于路径开销，路径开销指的沿途经过的链路cost累积和<br>ospf协议报文类型<br>1.hello 周期性发送，用来发现和维护ospf邻居关系<br>2.Databse Description 描述本地LSDB的摘要信息，用于两台设备进行数据同步<br>3.Link State Request 用于向对方请求所需要的LSA，设备只有在ospf邻居双方成功交换DD报文后才会向对方发出LSR报文<br>4.Link State ACK 用来对收到的LSA进行确认<br>​<br>ospf三大表:邻居表，链路信息表，路由表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//ospf基础设置命令</span><br><span class="line">//创建并运行ospf进程</span><br><span class="line">ospf [proess-id|router-id id ]</span><br><span class="line"></span><br><span class="line">//创建并进入ospf区域</span><br><span class="line">area area-id</span><br><span class="line"></span><br><span class="line">//制定运行ospf的接口</span><br><span class="line">network network-address wildcard-ask</span><br><span class="line"></span><br><span class="line">//配置ospf接口开销</span><br><span class="line">ospf cost cost</span><br><span class="line"></span><br><span class="line">//设置ospf带宽参考值</span><br><span class="line">bandwidth-reference value</span><br><span class="line"></span><br><span class="line">//设置接口在选举DR时的优先级</span><br><span class="line">ospf dr-priority priority</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>实验二：使用动态路由来实现不同网段的互联1.给定下图网络拓扑<br><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1682425601849-05837fb2-0fb8-423a-9a51-e8c56be0dfdc.png" alt="1682425601849-05837fb2-0fb8-423a-9a51-e8c56be0dfdc"></p>
+<p>ospf区域为0即骨干区<br>进入R1开启各个ospf接口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//R1</span><br><span class="line">[R1]ospf router-id 1.1.1.1   #id唯一标识R1</span><br><span class="line">[R1-ospf-1]area 0            #进入area 0</span><br><span class="line">[R1-ospf-1-area-0.0.0.0]</span><br><span class="line">[R1-ospf-1-area-0.0.0.0]network 11.1.1.1 0.0.0.0  #开启11.1.1.1接口，采用精准匹配</span><br><span class="line">[R1-ospf-1-area-0.0.0.0]network 21.1.1.0 0.0.0.3  #开启21.1.1.1接口，采用网络号与掩码反码匹配，21.1.1.1中网络号为30位</span><br><span class="line">[R1-ospf-1-area-0.0.0.0]network 192.168.1.0 0.0.0.255 #同21.1.1.1</span><br><span class="line">[R1-ospf-1-area-0.0.0.0]network 172.16.1.254 0.0.0.0 #精准匹配开启172.16.1.254</span><br><span class="line"></span><br><span class="line">//R2</span><br><span class="line">[R2]ospf router-id 2.2.2.2</span><br><span class="line">[R2-ospf-1]area 0</span><br><span class="line">[R2-ospf-1-area-0.0.0.0]network 11.1.1.2 0.0.0.3</span><br><span class="line">[R2-ospf-1-area-0.0.0.0]network 21.1.1.2 0.0.0.3</span><br><span class="line">[R2-ospf-1-area-0.0.0.0]network 10.10.10.0 0.0.0.255</span><br></pre></td></tr></table></figure>
+
+<p>开启之后ospf会互相发送hello报文建立邻居关系，接着发送DB报文与LS请求来交换各自的链路信息并存储到各自的LSDB（链路状态数据库）中依次来建立邻接关系,<strong>其中当NeighborCurrentState&#x3D;Full时表示处于邻接稳定状态，邻居稳定状态为Two-way</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dis ospf lsdb |router  //查看链路状态数据库</span><br><span class="line">dis ospf routing      //查看ospf路由表</span><br><span class="line">display ospf peer     //查看当前路由的邻居</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>以太网协议以太网是当今现有局域网采用的最通用的通信协议标准，该标准定义了在局域网中采用的电缆类型和信号处理方法<br>以太网是建立在CSMA&#x2F;CD(载波监听多路访问&#x2F;冲突检测)机制上的广播型网络<br>早期采用总线型以太网，后面采用交换机组网</p>
+<p>交换机vs路由器<br>交换机对数据帧的操作：<br>泛洪：交换机解析收到的数据帧的目的MAC地址，若在MAC地址表中未找到相应的目的MAC地址，则交换机会对该帧进行泛红操作；若交换机接受到的数据帧为广播帧，则会直接进行泛洪操作<br>转发：交换机接收数据帧，对目的MAC帧进行查表操作进行转发<br>丢弃：若数据帧的进接口与出接口是一样的，则会丢弃防止出现环路<br>路由器对ip数据报操作：转发，丢弃</p>
+<p>交换机可以隔离冲突域<br>路由器可以隔离广播域<br>​<br>​<br>​<br>VlAN技术以太网中交换机不能隔离广播域，因此当网络规模较大时容易出现广播风暴，为了解决这个问题便出现了VLAN技术</p>
+<p>VLAN划分基准：<br>基于接口<br>基于MAC地址<br>基于IP子网<br>基于协议<br>基于策略<br>实验三：通过vlan技术将隔离相同网段之间的设备实验拓扑图如下</p>
+<p><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1683276798804-7f95a160-0c9b-4273-8207-ff70ed123bee.png" alt="1683276798804-7f95a160-0c9b-4273-8207-ff70ed123bee"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//创建vlan</span><br><span class="line">vlan id</span><br><span class="line">//删除vlan</span><br><span class="line">undo valn id</span><br><span class="line">//一次性创建多个vlan</span><br><span class="line">vlan batch 10,20,30</span><br><span class="line">//创建100格vlan</span><br><span class="line">vlan 100 to 200</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//使用基于接口类型的vlan</span><br><span class="line">//进入相应的接口</span><br><span class="line">interface e0/0/2</span><br><span class="line">//设置接口类型</span><br><span class="line">port link-type access</span><br><span class="line">//设置接口所属vlan</span><br><span class="line">port default vlan id</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>要设置的vlan如下图<br><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1683277602552-b849ba71-d214-42f1-95d6-151612236522.png" alt="1683277602552-b849ba71-d214-42f1-95d6-151612236522"></p>
+<p>设置技术部所在的接口</p>
+<p><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1683277703735-ad881c19-3047-4332-8678-8874cfac2fcc.png" alt="1683277703735-ad881c19-3047-4332-8678-8874cfac2fcc">设置销售部的vlan<br><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1683277802963-7caeed65-9511-4ddc-9ac0-0aec1ae2427a.png" alt="1683277802963-7caeed65-9511-4ddc-9ac0-0aec1ae2427a"></p>
+<p><img src="/2024/03/13/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%92%E8%81%94/1683277856845-8cef3b26-f3d5-489e-86e1-54f8181730e1.png" alt="1683277856845-8cef3b26-f3d5-489e-86e1-54f8181730e1"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//trunk类型接口的基础命令</span><br><span class="line">//配置接口类型</span><br><span class="line">port link-type trunk</span><br><span class="line">//配置trunk接口加入指定vlan</span><br><span class="line">port trunk allow-pass vlan&#123;&#123;vlan-id[to vlan-id2]&#125;|all&#125;</span><br><span class="line">//(可选)配置trunk接口的却省vlan</span><br><span class="line">port trunk pvid vlan vlan-id</span><br></pre></td></tr></table></figure>
+
+    </article>
+    
+    <div class="read-nums">
+      <!-- id 将作为查询条件 -->
+      <span id="2024/03/13/网络通信与互联/" class="leancloud_visitors" data-flag-title="Your Article Title">
+        <em class="post-meta-item-text">浏览量</em>
+        <i class="leancloud-visitors-count"></i>
+      </span>
+    </div>
+    <div class="comments-intro">
+      <h2>评论区</h2>
+      <p>欢迎你留下宝贵的意见，昵称输入QQ号会显示QQ头像哦~</p>
+    </div>
+    <div id="vcomments" class="vcomments"></div>
+    
+  </div>
+  <div class="article-catelogue">
+    <div class="article-catelogue--wrapper">
+      <div class="catelogue catelogue-1">
+        <h3>目录</h3>
+        
+      </div>
+      
+        <div class="catelogue catelogue-2">
+          
+            <p>
+              <span>上一篇：</span>
+              <a href="/2024/03/13/c-学习手册/">c++学习手册</a>
+            </p>
+           
+          
+            <p>
+              <span>下一篇</span>
+              <a href="/2024/03/13/安全产品/">安全产品</a>
+            </p>
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // var定义，避免pjax重新进来造成的重复声明错误
+  var config = JSON.parse('{"enable":true,"appId":"Pf8zCXGEH1qsprnWfikVVujL-gzGzoHsz","appKey":"qOqoiUHhH1TGtLRUYURkLRQX","placeholder":"请留下你宝贵的意见吧~","meta":["nick"],"recordIP":true,"visitor":true,"enableQQ":true}')
+  new Valine({
+    el: '#vcomments',
+    appId: config.appId,
+    appKey: config.appKey,
+    placeholder: config.placeholder,
+    meta: config.meta,
+    recordIP: config.recordIP,
+    visitor: config.visitor,
+    enableQQ: config.enableQQ,
+    path: '2024/03/13/网络通信与互联/'
+  })
+</script>
+
+
+<script>
+  $(document).on('pjax:complete', function() {
+    const tocs = document.querySelector('.toc')
+    const links = tocs ? tocs.querySelectorAll('a') : []
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = decodeURIComponent(e.href)
+        href.search(/#(.*)/)
+        const id = RegExp.$1
+        const target = document.querySelector('#' + id)
+        const top = target.offsetTop
+        document.documentElement.scrollTo({
+          top: top - 100,
+          behavior: 'smooth'
+        })
+        e.preventDefault()
+      })
+    })
+  })
+</script> 
+
+</div>
+      <div class="main-right-wrapper"><div class="main-right">
+  <div class="main-right--board">
+    <div class="main-right--title">
+      <h5>公告栏</h5>
+      <i class="iconfont icon-gonggao"></i>
+    </div>
+    <div class="main-right--content">
+      Hello~大噶好。唔系可乐爱宅着，欢迎你们来到我的博客小站，希望能在这里收获到有用的东西哦！ 
+    </div>
+  </div>
+
+  <div id="aplayer" class="main-right--music"></div>
+
+  <div class="operate-items">
+    <div class="operate-item backtop">
+      <i class="iconfont icon-huidaodingbu"></i>
+      <span>回到顶部</span>
+    </div>
+    
+    <div class="operate-item turn-comment hidden">
+      <i class="iconfont icon-pinglun"></i>
+      <span>查看评论</span>
+    </div>
+    
+  </div>
+
+  <div class="main-right--site">
+    <div class="main-right--power">
+      <p>Power By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo</a>.</p>
+      <p>Theme：<a target="_blank" rel="noopener" href="https://github.com/Aizener/hexo-theme-cola">Cola.</a></p>
+    </div>
+    <p class="main-right--refer"><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/#/Integrated/index">蜀ICP备2022005384号-1</a> </p>
+  </div>
+</div>
+
+<script>
+  function setOperateItem () {
+    const reg = /\d{4}\/\d{2}\/\d{2}\/.+/
+    const path = location.pathname
+    const operateDom = document.querySelector('.main-right .operate-items')
+    const commentDom = document.querySelector('.turn-comment')
+    const cateloguDom = document.querySelector('.article-catelogue > .article-catelogue--wrapper');
+
+    if (commentDom) {
+      if (reg.test(path) || path.match(/\/log\/.+/)) {
+        commentDom.classList.remove('hidden')
+        const newDom = operateDom.cloneNode(true);
+        const _backtopDom = newDom.querySelector('.backtop');
+        const _commentDom = newDom.querySelector('.turn-comment');
+        _backtopDom.addEventListener('click', () => backTopEvent());
+        _commentDom.addEventListener('click', () => commentDomEvent());
+        cateloguDom.appendChild(newDom);
+      } else {
+        commentDom.classList.add('hidden')
+      }
+    }
+  }
+
+  setOperateItem()
+  const musics = JSON.parse(`[{"name":"安河桥","artist":"宋冬野","url":"http://ting6.yymp3.net:82/new25/songdongye/11.mp3","cover":"https://img2.baidu.com/it/u=1260056724,1076343118&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"},{"name":"卡布达","artist":"暂无","url":"music/kabuda.mp3","cover":"https://img2.baidu.com/it/u=705831265,2862720033&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"}]`)
+  const ap = new APlayer({
+    container: document.querySelector('#aplayer'),
+    audio: musics,
+  })
+
+  $(document).on('pjax:complete', function() {
+    setOperateItem()
+  })
+
+  document.querySelector('.backtop').addEventListener('click', () => {
+    backTopEvent();
+  })
+  const dom = document.querySelector('.turn-comment')
+  dom && dom.addEventListener('click', () => {
+    commentDomEvent();
+  })
+
+  function backTopEvent() {
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  function commentDomEvent() {
+    const commentDom = document.querySelector('.comments-intro')
+    if (!commentDom) return
+    const top = commentDom.offsetTop, height = commentDom.offsetHeight
+    document.documentElement.scrollTo({
+      top: top - 2 * height,
+      behavior: 'smooth'
+    })
+  }
+</script></div>
+    </section>
+  </div>
+  <div id="progress" class="progress"></div>
+  <div id="gray" class="gray"></div>
+
+  <script>
+    function initScroll () {
+      document.addEventListener('scroll', () => {
+        const doc = document.documentElement
+        const scrollTop = doc.scrollTop
+        const pageHeight = doc.offsetHeight
+        const clientHeight = doc.clientHeight
+        const ratio = scrollTop / (pageHeight - clientHeight)
+        const progress = document.querySelector('#progress')
+        const avatarImg = document.querySelector('.main-left--avatar')
+        progress.style.width = (100 * ratio) + '%'
+        avatarImg.style.transform = `rotate(${360 * ratio}deg)`
+      })
+    }
+
+    const rootPath = "/"
+
+    const checkAndSetArticlePageLayout = () => {
+      const path = location.pathname.replace(rootPath, '');
+      if (
+        /^\/?\d{4}\/\d{2}\/\d{2}\/.*/.test(path) ||
+        /^log\/.+/.test(path)
+      ) {
+        $('.main-container, .main-right, .main-right-wrapper').addClass('is-article')
+      } else {
+        $('.main-container, .main-right, .main-right-wrapper').removeClass('is-article')
+      }
+    }
+
+    const gray = "none"
+    const setGrayStyle = () => {
+      if (gray === 'none') {
+        return
+      } else if (gray === 'index') {
+        location.pathname === '/' ? $('#gray').show() : $('#gray').hide()
+      } else if (gray === 'all') {
+        $('#gray').show()
+      }
+    }
+    setGrayStyle()
+
+
+    window.onload = function () {
+      checkAndSetArticlePageLayout()
+      setTimeout(() => {
+        $('#load').slideUp()
+        $('#container').slideToggle()
+        setTimeout(() => {
+          initScroll();
+        }, 500)
+      }, 500)
+    }
+    
+    let status = 0
+    // 对所有链接跳转事件绑定pjax容器container
+    $(document).pjax('a[target!=_blank]', '#main-container', {
+      container: '#main-container',
+      fragment: '#main-container',
+      timeout: 8000
+    })
+
+    $(document).on('pjax:start', function() {
+    })
+    $(document).on('pjax:complete', function() {
+      status = 0
+      $('.main-container').addClass('to-up').on('animationend', function() {
+        $(this).removeClass('to-up')
+      })
+      setGrayStyle()
+      checkAndSetArticlePageLayout()
+    })
+    $(document).on('pjax:popstate', function() {
+      status = -1
+      checkAndSetArticlePageLayout()
+    });
+  </script>
+</body>
+</html>
