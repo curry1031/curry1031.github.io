@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我的技术与生活——小站首页 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/imgs/shortcut-icon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/public.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/iconfont.css" />
+  <link rel="stylesheet" href="/css/APlayer.min.css" />
+  <script src="/js/APlayer.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery.pjax.min.js"></script>
+
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script>
+    document.title = `我的技术与生活——小站首页`
+  </script>
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<style>
+  .load {
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(37, 35, 40);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 9999;
+  }
+  .load-circle {
+    width: 80px;
+    height: 80px;
+    border: 8px solid orange;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotate 1s linear infinite;
+    filter: drop-shadow(0 0 3px orange);
+  }
+  .load-circle-inner {
+    width: 40px;
+    height: 40px;
+    border: 8px solid orange;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate-reverse .5s linear infinite;
+  }
+  .load-text {
+    margin-top: 20px;
+    font-size: 24px;
+    color: orange;
+    display: flex;
+  }
+  .load-text span {
+    margin: 0 5px;
+    text-shadow: 5px 5px 5px orange;
+    animation: move 1s linear infinite;
+  }
+  .load-text span:nth-child(1) {
+    animation-delay: -0.6s;
+  }
+  .load-text span:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  .load-text span:nth-child(3) {
+    animation-delay: -0.4s;
+  }
+  .load-text span:nth-child(4) {
+    animation-delay: -0.3s;
+  }
+  .load-text span:nth-child(5) {
+    animation-delay: -0.2s;
+  }
+  .load-text span:nth-child(6) {
+    animation-delay: -0.1s;
+  }
+  @keyframes rotate {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes rotate-reverse {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(-360deg); }
+  }
+  @keyframes move {
+    0% { transform: translateY(0%) rotate(0) scale(1); }
+    20% { transform: translateY(20%) rotate(10deg) scale(1.2); }
+    80% { transform: translateY(-10%) rotate(-20deg) scale(.8);}
+    100% { transform: translateY(0) rotate(0) scale(1); }
+  }
+
+  .progress {
+    position: fixed;
+    left: 0; top: 0;
+    width: 0;
+    height: 3px;
+    background-color: green;
+    transition: all cubic-bezier(0.215, 0.610, 0.355, 1) .1s;
+    z-index: 9999;
+  }
+
+  .to-up {
+    animation: toUp .5s 1;
+  }
+  .gray {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: none;
+    pointer-events: none;
+    background-color: #000;
+    mix-blend-mode: color;
+  }
+  @keyframes toUp {
+    from { transform: translateY(15px); opacity: 0; }
+    to { transform: translateY(0) ; opacity: 1; }
+  }
+</style>
+<body>
+  <div id="load" class="load">
+    <div class="load-circle">
+      <div class="load-circle-inner"></div>
+    </div>
+    <p class="load-text">
+      <span>L</span>
+      <span>O</span>
+      <span>A</span>
+      <span>D</span>
+      <span>I</span>
+      <span>N</span>
+      <span>G</span>
+    </p>
+  </div>
+  <div id="container" class="container w-100 vh-100" style="display: none;">
+    <header class="header">
+  <div class="header-wrapper">
+    <div class="header-left">
+      <div class="header-search">
+        <input id="search-input" type="text" class="header-search--input" placeholder="请输入要检索的文章标题" />
+        <span id="search-btn" class="header-search--icon"><i class="iconfont icon-sousuo"></i></span>
+      </div>
+      <div id="search-layer" class="header-search--layer hidden">
+        <p class="title">
+          <span>以下是搜索内容：</span>
+          <span id="close-layer-btn">关闭</span>
+        </p>
+        <ul>
+        </ul>
+      </div>
+    </div>
+    <div class="header-right">
+      <ul class="header-menu">
+        <li>
+          <a href="http://example.com/">
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+            <span class="header-menu--span">首页</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/log">
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+            <span class="header-menu--span">日志</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/link">
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+            <span class="header-menu--span">友情链接</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/about">
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+            <span class="header-menu--span">关于我</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const ipt = document.querySelector('#search-input')
+  const btn = document.querySelector('#search-btn')
+  const layer = document.querySelector('#search-layer')
+  const posts = JSON.parse(`[{"title":"Hello World","path":"2024/03/14/hello-world/"}]`)
+  ipt.addEventListener('keyup', e => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  })
+  btn.addEventListener('click', () => {
+    handleSearch()
+  })
+
+  document.querySelector('#close-layer-btn').addEventListener('click', () => {
+    layer.classList.toggle('hidden')
+  })
+
+  function handleSearch() {
+    if (ipt.value.trim() === '') {
+      return
+    }
+    let html = ''
+    const targetPosts = posts.filter(post => post.title.includes(ipt.value))
+    targetPosts.forEach(post => {
+      html += `
+        <li>
+          <div>
+            <a href="/${post.path}">${post.title.replace(new RegExp(ipt.value), `<span>${ipt.value}</span>`)}</a>
+          </div>
+          <img src="${post.cover || '/imgs/default-cover.webp' }" />
+        </li>
+      `
+    })
+    if (html.trim () === '') {
+      html += '<p class="empty">没有搜索到内容</p>'
+    }
+    layer.querySelector('ul').innerHTML = html
+    layer.classList.remove('hidden')
+  }
+</script> 
+    <section id="main" class="main">
+      <div class="main-left-wrapper">
+<div class="main-left">
+  <div class="main-left--block">
+    <div class="main-left--info">
+      <img src="/imgs/avatar.jpg"" class="main-left--avatar" />
+      <div class="main-left--intro">
+        <p class="main-left--name">Cola.</p>
+        <div class="main-left--tags">
+          <span class="main-left--tag">中二</span>
+          <span class="main-left--tag">宅</span>
+        </div>
+      </div>
+    </div>
+  
+    <div>
+      <div class="main-left--motto">
+        <p>“花有重开日，人无再少年”</p>
+        <p>“一个简单普通的男孩”</p>
+      </div>
+      <div class="main-left--github">
+        <span class="line"></span>
+        <a target="_blank" rel="noopener" href="https://github.com/Aizener"><i class="logo iconfont icon-github-fill"></i></a>
+        <span class="line"></span>
+      </div>
+      <div class="main-left--statics">
+        <a href="/categories">
+          <div>
+            <span>0</span>
+            <span>分类</span>
+          </div>
+        </a>
+        <a href="/tags">
+          <div>
+            <span>3</span>
+            <span>标签</span>
+          </div>
+        </a>
+        <a href="/archives">
+          <div>
+            <span>1 </span>
+            <span>归档</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-left--block">
+    <ul class="main-left--menu">
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">小站首页</span>
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/log">
+            <span class="header-menu--span">个人日志</span>
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/link">
+            <span class="header-menu--span">友情链接</span>
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/about">
+            <span class="header-menu--span">关于自己</span>
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/tools">
+            <span class="header-menu--span">我的工具</span>
+            <i class="header-menu--icon iconfont icon-gongju"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="main-left--block">
+    <div class="main-left--site">
+      <h5 class="main-left--title">
+        <span>站点信息</span>
+        <i class="iconfont icon-zhandian"></i>
+      </h5>
+      <p class="main-left--subtitle">
+        <span>文章数目：</span>
+        <span>1 篇</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>最近动态：</span>
+        <span>今天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>上线时间：</span>
+        <span>757天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>当前版本：</span>
+        <span>v1.0.2</span>
+      </p>
+    </div>
+  </div>
+</div></div>
+      <div id="main-container" class="main-container">
+
+
+  <link rel="stylesheet" href="/css/partial/article.css" />
+
+<div class="article-container">
+  <div class="article">
+    <h1 class="article-title"></h1>
+    <div class="article-info">
+      <div class="article-info--item">
+        <div class="article-info--info">
+          
+          
+          <p class="article-info--date">日期：2024-03-13 23:03:05</p>
+        </div>
+        <img src="/imgs/default-cover.webp" alt="" class="article-cover">
+      </div>
+    </div>
+    <article class="article-content markdown-body">
+      <p>主要安全产品防火墙产品<br>WAF:WEB应用防火墙，专门用来保护web服务器<br>NGSOC:安全运营平台</p>
+<p>网络设备：路由器，交换机<br>ICG上网行为，审计不安全的流量并进行放行控制<br>终端安全：天擎（保护终端的安全）<br>IPS:入侵检测系统<br>漏洞扫描工具（针对应用的漏洞，包括系统漏洞，结构漏洞，管理漏洞等）<br>代码审计（针对所有的代码python，php，css，jsp，java，js，go，c，mysql等来判断其中的安全隐患）</p>
+
+
+<p>安全设备一定会对网络数据传输起到延迟效果，延迟需要再客户接收的范围内<br>​<br>防火墙1 安全域（一个具有相同安全策略的节点的集所形成的区域，使用name来区别不同的安全域，使用优先级来区分安全域的安全等级，默认安全域的优先级是0-100，其值越大，安全级越高，FW默认情况下高安全级别的安全域可以直接访问低级别的安全域内的终端）<br>分类：<br>预定义：FW的厂商定义，默认有4个：trust（可信安全域），untrust（不可信安全域），DMZ(非军事化安全域)，local（代表防火墙本地所有接口）<br>trust：内网终端和服务器所在的区域<br>untrust：外网所在的区域<br>DMZ:内网提供对外服务的服务器所在的区域<br>local：防火墙的接口所在的区域<br>默认：不同的安全域之间不能直接通信，只能通过安全策略进行放行<br>​<br>自定义：客户自己定义的安全域，name随便设置，安全级别自由设置<br>​<br>防火墙的部署：（防火墙的接口）<br>        -路由模式：同时具备路由器和防火墙的功能<br>        -透明模式：同时具备二层交换机和防火墙的功能<br>        -旁路模式：将防火墙当成一台分析设备<br>        -混合模式：防火墙的接口模式不一样，有路由模式也有透明模式<br>防火墙的配置方式:<br>        -WEB界面<br>        -命令行<br>防火墙的登录方式:<br>        -以网线的方式登录，登陆之后使用WEB界面来配置设备<br>        将自己PC的网口通过网线连接FW的管理口（要么是MGT口，要么是G0&#x2F;0&#x2F;0），厂家提前在管理口配置好了ip地址，不同厂商配置ip地址不一样，如华为192.168.0.1&#x2F;24，奇安信是10.0.0.1&#x2F;24，自己的电脑配置同一网段的另一个地址，注意一些厂商会指定可信地址，此时，本地pc必须配置可信地址<br>        比如PC-HWFW<br>      192.168.0.2&#x2F;24 ——192.168.0.1&#x2F;24<br> 地址配置好之后，在pc上打开浏览器，在浏览器中输入厂商指定的网址，如华为<a target="_blank" rel="noopener" href="https://192.168.0.1:8843/">https://192.168.0.1:8843</a> ,奇安信<a target="_blank" rel="noopener" href="https://10.0.0.1,实现web配置/">https://10.0.0.1,实现web配置</a><br>防火墙功能：主要功能-过滤和访问控制<br>      -以console线登录防火墙，使用命令来配置设备<br>      本地PC通过console线连接FW的console接口，pc端使用usb接口和对方连接，此时，相当于将FW上的信息通过console线传递到pc端展现出来，在pc端使用第三方登录软件，如crt，登录防火墙进行命令行设置。<br>配置防火墙思路：<br>    -确定防火墙接口的模式：路由模式<br>    -配置接口参数：ip地址，安全域<br>    -配置安全策略<br>   -验证安全策略是否生效</p>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//防火墙进入安全域</span><br><span class="line">[hwfw]firewall zone trust </span><br><span class="line">//将g/0/01接口划分为trust域</span><br><span class="line">[hwfw-zone-trust]add interface g0/0/1</span><br><span class="line"></span><br><span class="line">同理</span><br><span class="line">[hwfw]firewall zone untrust</span><br><span class="line">[hwfw-zone-untrust]add interface g0/0/2</span><br><span class="line"></span><br><span class="line">实现防火墙trust安全域的互通：</span><br><span class="line">流量互通的前提是路由可达</span><br><span class="line">1.路由可达</span><br><span class="line">2.配置安全策略放行相应安全域之间的流量互通资格</span><br><span class="line">security-policy  //进入安全策略</span><br><span class="line">rule name local_trust  //命令安全策略</span><br><span class="line">source-zone loacl       //源安全域</span><br><span class="line">destination-zone trust   //目的安全域</span><br><span class="line">action permit            // 允许local到trust的流量</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">source-zone trust       </span><br><span class="line">destination-zone local   //双向互通</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-在fw上配置安全策略，只放行untust到trust方向的流量</span><br><span class="line">security-policy</span><br><span class="line">rule name untrust_trust</span><br><span class="line">source-zone untrust</span><br><span class="line">destination-zone trust</span><br><span class="line">action permit</span><br><span class="line">此时，出现从untrust主动访问trust的流量可以实现进出，但是从trust主动访问untrust的流量不允许进出</span><br><span class="line">/*</span><br><span class="line">针对ping流量，只要请求包可以通过FW，那么请求包的回应报文，无论是否有相应的安全策略，都允许通过FW</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">/删除名为untrust_trust的安全策略</span><br><span class="line">undo rule name untrust_trust</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>扩展部分：<br>在内网搭建一台web服务器，放置在DMZ区域，要求外网的客户端可以访问企业的web服务器<br>-ip地址配置<br>fw：interface g1&#x2F;0&#x2F;2<br>       ip address 10.10.10.100&#x2F;24<br>firewall zone dmz<br>add interface g1&#x2F;0&#x2F;2</p>
+<p>-配置路由和安全策略，实现web的客户端和服务器之间的互通<br>【isp】ip route-static 10.10.10.10 32 1.1.1.1<br>【hwfw】ip route-static 9.9.9.9 32 1.1.1.2<br>​<br>-安全策略的配置思路：前提Tcp流量由客户端主动访问服务器触发<br>若web服务器所在的安全域的优先级高，客户端所在的安全域的优先级低，此时防火墙上的安全策略只需要方向从低到高方向的安全策略<br>若web服务器所在的安全域的优先级低，客户端所在的安全域的优先级高，此时防火墙上的安全策略需要从低到高方向和从高到低方向的安全策略<br>​<br>防火墙技术： 5个技术<br>    -包过滤技术：包过滤防火墙，处理对象是单个数据包，并且只能查看数据包的三层及以下层的参数，可以识别数据包的sip&#x2F;dip&#x2F;smac&#x2F;dmac,协议号等参数。<br>    -状态检测技术：会话概念，session，处理对象是流量，根据流量的会话来识别流量进行过滤和防控，若某个会话被放行，那么和该会话相关的数据都会被放行，此时的防火墙会有一张会话表，来记录对不同会话的处理方式，根据会话表，当流量触发会话表之后，防火墙自动产生相应的安全策略来放行或者过滤对应的数据。主要针对tcp流量和icmp流量，防火墙可以识别4层及以下层的信息<br>     -应用代理技术：直接截取客户端访问应用服务器的流量，代替应用服务器和客户端之间进行数据传输。此时，防火墙需要识别出应用层的参数，对于客户端来说，访问对象一直是服务器，对于真正的服务器来说是，防火墙来访问他，不足之处，应用代理的兼容性，一个应用对应一个代理，DNS-DNS代理，应用树森及，代理软件也要升级。<br>     -应用识别技术：既可以识别流量的应用层，如qq，微信，爱奇艺等等，此时防火墙需要工作在应用层，通过应用层的参数来实现对不同应用的区分，主要的实现方法就是DPI,DFI，DFI是深度流检测，是根据数据流来识别应用，这种方法对于加密的数据也可以识别出来。误差率比较高。DPI是深度包检测，对单个数据包做解剖来实现应用的识别，但是若数据包被加密了，就识别不了，误差率低。防火墙可以随意的识别出数据的每一层参数。<br>      -内容检测技术：识别出数据包内的用户数据，可以通过用户数据来实现对流量更加精细的区分，通过敏感词来实现内部流量或者是外部流量的防控。<br>WAF应用防火墙作用：保护web服务器-网站<br>WEB-渗透–网址–网站结构，网站运行原理<br>网站–网址–域名<br>ip地址：在网络上唯一的标记某一个节点，一个域名可以同时对应多个ip地址，一个ip地址同时只能对应一个域名。<br>​<br>域名结构：<br>              根域 .<br>               顶级域名&#x2F;一级域名   分类：国家级&#x2F;行业<br>               二级域名：自定义&#x2F;全球统一的<br>               三级域名：一般都是www<br>​<br>​<br>web服务器：Micosoft IIs,Apache,Ngix,WebLogic<br>web应用系统安全漏洞分类：软件漏洞，结构漏洞，配置漏洞，管理漏洞<br>保护web系统安全主要从建设和运维两个角度来保障<br>1.系统建设期间：系统建设期间综合利用防火墙系统，漏洞扫描系统，安全审计和数据备份系统等产品对web系统进行安全保护<br>2.运维期间：系统运维期间安全运维人员应及时并修复系统中的安全漏洞，对于保障web系统安全也非常重要</p>
+<p>web安全主要保护服务器及其数据的安全，保护服务器和用户之间传递的信息的安全，保护web应用客户端及其环境安全这三个方面<br>​<br>web安全威胁前沿趋势：<br>1.不当信息公开导致大量政府网站信息泄露<br>2.勒索软件大量入侵服务器<br>3.挖矿木马的疯狂敛财暗流<br>4.反人工检测技术大范围流行<br>5.物联网威胁更加突出<br>6Weblogic反序列化漏洞攻击可能爆发</p>
+<p>waf五大基本功能：<br>web非授权访问的防御<br>web攻击的防御<br>web恶意代码的防御<br>web应用交付能力<br>web应用合规功能<br>​<br>​<br>态势感知三个层面：感知，理解，预测<br>一级SA：感知相关元素的状态，属性和动作<br>二级SA：现状的理解，通过理解数据块的重要性，具有2级SA的个体将特定目标相关的含义和意义与手头的信息相关联<br>三级SA：对未来状态的映射，一旦人们知道这些元素是什么以及他们对于当前目标意味着什么，预测这些在（至少在短期内）将做什么<br>​<br>态势感知建设目的：<br>检测，分析和响应，预测预防，防御<br>​</p>
+
+    </article>
+    
+    <div class="read-nums">
+      <!-- id 将作为查询条件 -->
+      <span id="netconncet/安全产品.html" class="leancloud_visitors" data-flag-title="Your Article Title">
+        <em class="post-meta-item-text">浏览量</em>
+        <i class="leancloud-visitors-count"></i>
+      </span>
+    </div>
+    <div class="comments-intro">
+      <h2>评论区</h2>
+      <p>欢迎你留下宝贵的意见，昵称输入QQ号会显示QQ头像哦~</p>
+    </div>
+    <div id="vcomments" class="vcomments"></div>
+    
+  </div>
+  <div class="article-catelogue">
+    <div class="article-catelogue--wrapper">
+      <div class="catelogue catelogue-1">
+        <h3>目录</h3>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // var定义，避免pjax重新进来造成的重复声明错误
+  var config = JSON.parse('{"enable":true,"appId":"Pf8zCXGEH1qsprnWfikVVujL-gzGzoHsz","appKey":"qOqoiUHhH1TGtLRUYURkLRQX","placeholder":"请留下你宝贵的意见吧~","meta":["nick"],"recordIP":true,"visitor":true,"enableQQ":true}')
+  new Valine({
+    el: '#vcomments',
+    appId: config.appId,
+    appKey: config.appKey,
+    placeholder: config.placeholder,
+    meta: config.meta,
+    recordIP: config.recordIP,
+    visitor: config.visitor,
+    enableQQ: config.enableQQ,
+    path: 'netconncet/安全产品.html'
+  })
+</script>
+
+
+<script>
+  $(document).on('pjax:complete', function() {
+    const tocs = document.querySelector('.toc')
+    const links = tocs ? tocs.querySelectorAll('a') : []
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = decodeURIComponent(e.href)
+        href.search(/#(.*)/)
+        const id = RegExp.$1
+        const target = document.querySelector('#' + id)
+        const top = target.offsetTop
+        document.documentElement.scrollTo({
+          top: top - 100,
+          behavior: 'smooth'
+        })
+        e.preventDefault()
+      })
+    })
+  })
+</script> 
+
+</div>
+      <div class="main-right-wrapper"><div class="main-right">
+  <div class="main-right--board">
+    <div class="main-right--title">
+      <h5>公告栏</h5>
+      <i class="iconfont icon-gonggao"></i>
+    </div>
+    <div class="main-right--content">
+      Hello~大噶好。唔系可乐爱宅着，欢迎你们来到我的博客小站，希望能在这里收获到有用的东西哦！ 
+    </div>
+  </div>
+
+  <div id="aplayer" class="main-right--music"></div>
+
+  <div class="operate-items">
+    <div class="operate-item backtop">
+      <i class="iconfont icon-huidaodingbu"></i>
+      <span>回到顶部</span>
+    </div>
+    
+    <div class="operate-item turn-comment hidden">
+      <i class="iconfont icon-pinglun"></i>
+      <span>查看评论</span>
+    </div>
+    
+  </div>
+
+  <div class="main-right--site">
+    <div class="main-right--power">
+      <p>Power By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo</a>.</p>
+      <p>Theme：<a target="_blank" rel="noopener" href="https://github.com/Aizener/hexo-theme-cola">Cola.</a></p>
+    </div>
+    <p class="main-right--refer"><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/#/Integrated/index">蜀ICP备2022005384号-1</a> </p>
+  </div>
+</div>
+
+<script>
+  function setOperateItem () {
+    const reg = /\d{4}\/\d{2}\/\d{2}\/.+/
+    const path = location.pathname
+    const operateDom = document.querySelector('.main-right .operate-items')
+    const commentDom = document.querySelector('.turn-comment')
+    const cateloguDom = document.querySelector('.article-catelogue > .article-catelogue--wrapper');
+
+    if (commentDom) {
+      if (reg.test(path) || path.match(/\/log\/.+/)) {
+        commentDom.classList.remove('hidden')
+        const newDom = operateDom.cloneNode(true);
+        const _backtopDom = newDom.querySelector('.backtop');
+        const _commentDom = newDom.querySelector('.turn-comment');
+        _backtopDom.addEventListener('click', () => backTopEvent());
+        _commentDom.addEventListener('click', () => commentDomEvent());
+        cateloguDom.appendChild(newDom);
+      } else {
+        commentDom.classList.add('hidden')
+      }
+    }
+  }
+
+  setOperateItem()
+  const musics = JSON.parse(`[{"name":"安河桥","artist":"宋冬野","url":"http://ting6.yymp3.net:82/new25/songdongye/11.mp3","cover":"https://img2.baidu.com/it/u=1260056724,1076343118&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"},{"name":"卡布达","artist":"暂无","url":"music/kabuda.mp3","cover":"https://img2.baidu.com/it/u=705831265,2862720033&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"}]`)
+  const ap = new APlayer({
+    container: document.querySelector('#aplayer'),
+    audio: musics,
+  })
+
+  $(document).on('pjax:complete', function() {
+    setOperateItem()
+  })
+
+  document.querySelector('.backtop').addEventListener('click', () => {
+    backTopEvent();
+  })
+  const dom = document.querySelector('.turn-comment')
+  dom && dom.addEventListener('click', () => {
+    commentDomEvent();
+  })
+
+  function backTopEvent() {
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  function commentDomEvent() {
+    const commentDom = document.querySelector('.comments-intro')
+    if (!commentDom) return
+    const top = commentDom.offsetTop, height = commentDom.offsetHeight
+    document.documentElement.scrollTo({
+      top: top - 2 * height,
+      behavior: 'smooth'
+    })
+  }
+</script></div>
+    </section>
+  </div>
+  <div id="progress" class="progress"></div>
+  <div id="gray" class="gray"></div>
+
+  <script>
+    function initScroll () {
+      document.addEventListener('scroll', () => {
+        const doc = document.documentElement
+        const scrollTop = doc.scrollTop
+        const pageHeight = doc.offsetHeight
+        const clientHeight = doc.clientHeight
+        const ratio = scrollTop / (pageHeight - clientHeight)
+        const progress = document.querySelector('#progress')
+        const avatarImg = document.querySelector('.main-left--avatar')
+        progress.style.width = (100 * ratio) + '%'
+        avatarImg.style.transform = `rotate(${360 * ratio}deg)`
+      })
+    }
+
+    const rootPath = "/"
+
+    const checkAndSetArticlePageLayout = () => {
+      const path = location.pathname.replace(rootPath, '');
+      if (
+        /^\/?\d{4}\/\d{2}\/\d{2}\/.*/.test(path) ||
+        /^log\/.+/.test(path)
+      ) {
+        $('.main-container, .main-right, .main-right-wrapper').addClass('is-article')
+      } else {
+        $('.main-container, .main-right, .main-right-wrapper').removeClass('is-article')
+      }
+    }
+
+    const gray = "none"
+    const setGrayStyle = () => {
+      if (gray === 'none') {
+        return
+      } else if (gray === 'index') {
+        location.pathname === '/' ? $('#gray').show() : $('#gray').hide()
+      } else if (gray === 'all') {
+        $('#gray').show()
+      }
+    }
+    setGrayStyle()
+
+
+    window.onload = function () {
+      checkAndSetArticlePageLayout()
+      setTimeout(() => {
+        $('#load').slideUp()
+        $('#container').slideToggle()
+        setTimeout(() => {
+          initScroll();
+        }, 500)
+      }, 500)
+    }
+    
+    let status = 0
+    // 对所有链接跳转事件绑定pjax容器container
+    $(document).pjax('a[target!=_blank]', '#main-container', {
+      container: '#main-container',
+      fragment: '#main-container',
+      timeout: 8000
+    })
+
+    $(document).on('pjax:start', function() {
+    })
+    $(document).on('pjax:complete', function() {
+      status = 0
+      $('.main-container').addClass('to-up').on('animationend', function() {
+        $(this).removeClass('to-up')
+      })
+      setGrayStyle()
+      checkAndSetArticlePageLayout()
+    })
+    $(document).on('pjax:popstate', function() {
+      status = -1
+      checkAndSetArticlePageLayout()
+    });
+  </script>
+</body>
+</html>
