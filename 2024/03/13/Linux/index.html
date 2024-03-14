@@ -1,154 +1,221 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#3367D6"/>
-  <link rel="apple-touch-icon" href="/icons-192.png">
-  <link rel="manifest" href="/manifest.json">
-  
-  <meta name="generator" content="Hexo 7.1.1">
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Linux | Hexo</title><meta name="keywords" content="linux"><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Linux"><meta name="application-name" content="Linux"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="Linux"><meta property="og:url" content="http://example.com/2024/03/13/Linux/index.html"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="linux系统文件架构以及相应文件功能说明文件IO与进程获取文件状态函数fcntl错误处理函数1.strerror(errno)    传入错误码转换成相应的错误信息2.perror(“fopen err”)  打印错误原因的字符串​虚拟地址空间32位机器，该地址空间为4G 文件描述符 程序与进程我"><meta property="og:locale" content="en"><meta property="og:image" content="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg"><meta property="article:author" content="John Doe"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg"><meta name="description" content="linux系统文件架构以及相应文件功能说明文件IO与进程获取文件状态函数fcntl错误处理函数1.strerror(errno)    传入错误码转换成相应的错误信息2.perror(“fopen err”)  打印错误原因的字符串​虚拟地址空间32位机器，该地址空间为4G 文件描述符 程序与进程我"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2024/03/13/Linux/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"Author: John Doe","link":"Link: ","source":"Source: Hexo","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.","copySuccess":"Copy success, copy and reprint please mark the address of this article"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Hexo',
+  title: 'Linux',
+  postAI: '',
+  pageFillDescription: '系统文件架构以及相应文件功能说明文件与进程获取文件状态函数错误处理函数传入错误码转换成相应的错误信息打印错误原因的字符串虚拟地址空间位机器该地址空间为文件描述符程序与进程我们平时写的语言代码通过编译器编译最终他会成为一个可执行进程当这个可执行程序运行起来后他就成为了一个进程程序是存放在存储介质上的可执行文件而进程是程序执行的过程进程的状态是变化的其包括进程的创建调度消亡分配资源的最小单位是进程并行指在同一时刻有多条指令在多个处理器上同时运行并发指在同一时刻只能有一条指令执行但多个进程指令被快速的轮转执行使得在宏观上具有多个进程同时执行的效果但在微观上并不是同时执行的只是把时间分成若干段使多个进程快速交替的执行内存管理单元管理虚拟存储器物理存储器的控制线路虚拟地址映射为物理地址提供硬件机制的内存访问进程控制块进程运行时内核为每一个进程分配一个维护进程相关的信息内核的进程控制块是结构体与进程相关的命令与进程相关的函数进程的创建头文件用于从一个已存在的进程中创建一个新进程父子进程数据遵循读时共享写时拷贝区分父子进程区分父子进程创建一个子进程子进程父进程在父进程中创建子进程返回子进程的但在子进程中返回父子进程的地址空间父子进程堆空间查看内存泄露创建一个子进程子进程子进程睡醒之后父进程父进程之前父进程之后调试多进程跟踪子进程跟踪父进程进程退出函数标准库函数系统调用等待子进程退出函数和函数的功能一样区别在于函数会阻塞可以设置不阻塞还可以指定等待那个子进程结束注意一次或调用只能清理一个子进程清理多个子进程应使用循环函数主要功能回收已经结束子进程的资源宏函数创建子进程父进程执行父进程等待子进程退出回收其资源父进程阻塞等待子进程退出父进程回收了子进程的资源属于正常退出子进程退出状态码子进程被信号杀死了子进程被信号暂停函数孤儿进程僵尸进程进程替换一般是可执行文件名必须是等价于一般是可执行文件的绝对或者相对路径必须是等价于在原进程中如果执行成功那么原来的进程就会被可执行文件整个替换并从的函数开始执行所以原进程中的已经被替换了不会执行调试器该程序是一个交互式工具工作在字符模式除外下还有等调试器主要功能启动程序可以按照自定义要求随心所欲的运行程序可以被调试的程序在你所指定的调置的断点处停住当程序被停住时可以检查此时你的程序中所发生的事动态的改变你程序的执行环境生成调试信息在编译时使用参数启动执行文件设置运行参数可指定运行时参数如可以查看设置好的运行参数启动程序程序开始执行如果有断点停在第一个断点处程序向下执行一行显示源代码打印第行的上下文内容显示函数名为的函数的源程序显示当前行后面的源程序显示当前行前面的源程序断点操作设置断点可以简写为设置断点在源程序第行设置断点在函数入口处查询断点多文件设置断点在源文件的行处停住在源文件的函数的入口处停住或在类的函数的入口停住在名称空间为的类的函数的入口处停住条件断点维护断点删除断点禁用断点启用断点调试代码运行程序简写单步跟踪函数调用当做一条简单语句执行简写单步跟踪函数调用进入被调用函数体内简写退出进入的函数在一个循环体内单步跟踪时这个命令可以运行程序直到退出循环体简写继续运行程序停在下一个短点的位置简写退出简写数据查看查看运行时数据简写自动显示可以设置一些自动显示的变量变量名查看设置的自动显示的信息删除自动显示中静态库的制作编译时加载前缀后缀将文件通过命令生成文件之后使用命令中动态库的制作运行时加载前缀后缀动态库的制作步骤一生成目标文件编译时选项步骤二生成共享库链接选项步骤三通过命令查看对应的函数动态库的使用一个工程中的源文件不计其数其按类型功能模块分别放在若干个目录中定义了一系列的规则来指定哪些文件需要先编译那些文件需要后编译哪些文件需要重新编译甚至于进行更复杂的功能操作因为就像脚本一样其中也可以执行操作系统的命令带来的好处就是自动化编译主要解决两个问题大量代码的关系维护减少重复编译时间工具安装语法规则一条规则目标依赖文件列表命令列表基本规则三要素目标通常是要产生的文件名称目标可以是可执行文件或其他文件也可以是一个动作名称依赖文件用来谁从而产生目标的文件一个目标通常有几个依赖文件命令执行的动作一个规则可以含几个命令有多个命令时每个命令占一行命令格式显示工具的版本信息在处理之前和之后的工作路径读取之前改变工作路径至目录只打印要执行的命令但不执行执行但不显示执行的命令若指定命令时没有指定目标则工具默认是文件得第一个目标案例自定义变量三个自动变量表示目标表示所有依赖表示第一个依赖模式匹配所用的都依赖于对应的中的函数查找指定目录下的指定类型的文件找到当前目录下所有后缀为的文件赋值给匹配替换把变量里所有后缀为的文件名替换成中的伪目标声明为伪目标伪目标不去判断目标文件是否存在或者已经更新无条件执行命令特殊符号此命令出错也会执行后续操作不显示命令本身只显示结果声明为伪目标伪目标不去判断目标文件是否存在或者已经更新无条件执行命令进程之间的通信进程是一个独立的组员分配单位不同进程之间的资源是独立的没有关联不能在一个进程中直接访问另一个进程的资源无名管道管道也叫无名管道他是系统进程间通信的最古老形式所有的系统都支持这种通信机制管道有如下特点半双工数据在同一时刻只能在一个方向上流动数据只能从管道的一端写入从另一端读出写入管道中的数据遵循先入先出的规则管道所传送的数据是无格式的这要求管道的读出方式与写入方必须事先约定好数据的格式如多少字节算一个消息等管道不是普通的文件不属于某个文件系统其只存在于内存中管道在内存中对应一个缓冲区不同的系统其大小不一定相同从管道读取数据是一次性操作数据一旦被读走它就从管道中被抛弃释放空间以便写更多数据管道没有名字只能在具有公共祖先的进程之间使用对于管道特点的理解我们可以类比现实生活中管子管子的一端塞东西另一端取东西函数创建无名管道用于读用于写关闭文件描述符父子进程通过无名管道通信和文件的读写相似即使子进程先执行也会被管道阻塞等待父进程执行之后再执行读操作设置非阻塞属性父子进程使用无名管道进行通信父进程写管道子进程读管道创建无名管道创建子进程子进程关闭写端读取管道内容关闭读端进程退出父进程关闭读端关闭写端查看管道缓冲区的大小查看管道缓冲区的函数功能该函数可以通过参数查看不同的属性值参数文件描述符查看管道缓冲区的大小文件名字字节数的上限返回值成功根据返回的值的意义也不同失败有名管道的创建管道由于没有名字只能用于亲缘关系的进程间通信为了克服这个缺点提出了命名管道也叫有名管道命名管道和无名管道区别在文件系统中作为一个特殊的存在但中的内容却放在内存中当时用的进程退出后文件将继续保存在文件系统中以便以后使用有名字不相关的进程可以通过打开命名管道进行通信通过命令创建有名管道管道名通过函数创建有名管道参数普通的路径名也就是创建后的名字文件权限与打开普通文件的函数中的参数相同返回值成功失败如果文件已经存在则会出错且返回查看管道文件是否存在有名管道读写操作一旦使用创建一个就可以使用打开它常见的文件函数都可以用于如等严格遵循先进先出对管道及的读总是从开始处返回数据对他们的写则是把数据添加到末尾他们不支持等文件定位操作写管道写有名管道以只写的方式打开一个管道文件以只写方式打开有个有名管道写管道关闭文件读管道读管道以只读方式打开一个管道文件以只读方式打开一个管道文件循环读取管道文件内容管道内容关闭文件使用有名管道实现建议聊天窗口使用两个管道两个程序先写后读写读先读后写读写先写后读以只写方式打开管道以只写方式打开管道以只读方式打开管道以只读方式打开管道管道进行读操作管道进行写操作发消息向中写入字节数读取的内容为关闭管道先读后写以只读方式打开管道以只读方式打开管道以只写方式打开管道以只写方式打开管道管道进行读操作管道进行写操作读取的内容为发消息向中写入字节数关闭管道共享存储映射存储映射使用一个磁盘文件与存储空间中的一个缓冲区相映射于是当从缓冲区中读取数据就相当于读文件中的相应字节类似将数据存入缓冲区则相应的字节就自动写入文件这样就可以在不适用和函数的情况下使用地址指针完成操作共性内存可以说是最有用的进程间通信方式也是最快的形式因为进程可以直接读写内存而不需要任何数据的拷贝存储映射函数函数函数断开映射区的连接使用函数映射区的注意事项创建映射区的过程中隐含着一次对映射文件的读取当时要求映射区的权限应文件打开的权限出于对映射区的保护而则无所谓因为中的权限是对内存的限制映射区的释放与文件关闭无关只要映射创立成功文件可以立即关闭特别注意当映射文件大小为时不能创建映射区所以用于映射的文件必须要有实际大小使用常常会出现错误通常是由于共享文件存储空间大小引起的传入的地址一定是的返回地址坚决杜绝指针操作如果文件偏移量必须是的整数倍创建映射区出错率非常高一定要检查返回值确保映射区建立成功后再进行后续操作父子进程借助存储映射区实现通信不同进程使用存储映射区进行通信原理一样借助存储映射实现进程通信匿名映射实现父子进程通信通过使用我们发现使用映射区来完成文件读写操作十分方便父子进程通信也比较容易但缺陷是每次创建映射区一定要依赖一个文件才能实现通常为了建立映射区要一个文件创建好了再掉比较麻烦可以直接使用匿名映射来代替其实系统给我们提供了创建匿名映射区的方法无需依赖一个文件即可创建映射区同样需要借助标志位参数来指定使用或父子进程使用匿名映射进程间通信创建匿名映射创建子进程父子进程通信子进程写父进程读断开连接信号的概述信号是进程间通信的最古老的方式信号时软件中断他是在软件层次对中断机制的一种模拟是一种异步通信的方式信号的编号信号四要素每个信号必备要素编号名称事件默认处理动作和不予许被忽略停止信号状态未决状态没有被处理递达状态信号被处理了信号产生函数函数父进程杀死子进程函数函数函数闹钟函数定时器函数使用捕捉超时函数信号处理函数捕捉到信号第一次触发事件设置触发周期捕捉信号设置定时器进程收到闹钟超时信号之后就会终止该进程按下任意键继续信号集信号集概述函数信号阻塞集也称信号屏蔽集信号掩码每个进程都有一个阻塞集创建子进程时将继承父进程的阻塞集信号阻塞集用来描述那些信号递送到该进程的时候被阻塞所谓阻塞并不是禁止传送信号而是暂缓信号的传送若将被阻塞的信号从信号阻塞集中删除且对应的信号在阻塞时发生了进程将收到相应的信号我们可以通过修改当前的信号掩码来改变信号的阻塞情况内核实现信号捕捉过程信号捕捉网络编程桥接模式虚拟机与物理机一样直连局域网模式虚拟机和物理机之间通过一块虚拟的网关互联通信虚拟机与物理机访问而不能与局域网中的其他主机直接互联虚拟机是通过物理机中的网卡来实现与局域网中的其他主机通信套接字地址端口号用于不通主机之间的通信全双工通信字节序转换功能将点分十进制串转成网络大端的数据参数点分十进制串的首地址位网络地址成功返回点分十进制串点分十进制值发送数据点分十进制值点分十进制串接收数据接受数据网络编程套接字结构体网络通信协议三大问题协议端口封装成结构体协议端口通用套接字结构体网络编程传输控制协议特点出错重传每次发送都会受到确认帧安全创建套接字协议传输类型上面只需组应用层的包成功返回文件描述符连接服务器套接字套接字结构体的地址套接字结构体的长度创建套接字链接服务器读写数据',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-03-13 23:33:03',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-  
-
-  
-
-  
-    <meta name="author" content="John Doe">
-  
-
-  
-
-  
-
-  <title>Linux | Hexo</title>
-
-  
-
-  
-    <link rel="shortcut icon" href="/favicon.ico">
-  
-
-  <!--mathjax latex数学公式显示支持-->
-  
-  
-
-  
-
-  
-
-  
-<link rel="stylesheet" href="/css/style.css">
-
-</head>
-<body>
-  <div class="root-container">
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
     
-<!-- header container -->
-<header class="header-container post">
-  
-    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
-  
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
 
-  <!-- navbar -->
-<nav class="navbar">
-  <div class="navbar-content">
-    <!-- logo -->
-    <div class="navbar-logo">
-      <a href="/">
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
         
-          Hexo
-        
-      </a>
-    </div>
-    <!-- link -->
-    <div class="navbar-link">
-      <div class="navbar-btn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <ul class="navbar-list">
-        
-          <li class="navbar-list-item"><a href="/">首页</a></li>
-        
-          <li class="navbar-list-item"><a href="/links">友链</a></li>
-        
-          <li class="navbar-list-item"><a href="/about">关于</a></li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
 
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-    <div class="header-content">
-      <div class="post-text layout-block">
-        <div class="layout-margin">
-          <h1 class="title-wrap">Linux</h1>
-          <h2 class="title-sub-wrap">
-            <strong>John Doe</strong>
-            <span>发布于</span>
-            <time  class="article-date" datetime="2024-03-13T15:25:57.000Z" itemprop="datePublished">2024-03-13</time>
-          </h2>
-          
-          
-          <ul class="wrap-list dark">
-  
-</ul>
-          <ul class="wrap-list dark">
-  
-    <li><a href="/tags/linux/">🏷️ linux</a></li>
-  
-</ul>
-        </div>
-      </div>
-    </div>
-  
-
-  
-  
-  
-</header>
-
-    <!-- 文章 -->
-
-<!-- 文章内容 -->
-<div class="body-container">
-  <article class="content-container layout-block post-container">
-    <div class="article-info">
-      
-      
-      
-      
-      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <p>linux系统文件架构以及相应文件功能说明<br>文件IO与进程<strong>获取文件状态函数fcntl</strong><br><strong>错误处理函数</strong><br><strong>1.strerror(errno)    传入错误码转换成相应的错误信息</strong><br><strong>2.perror(“fopen err”)  打印错误原因的字符串</strong><br><strong>​</strong><br><strong>虚拟地址空间</strong><br><strong>32位机器，该地址空间为4G</strong><br><img src="/2024/03/13/Linux/1686211568855-c2bb53d1-b5fd-4aa5-9bc7-bdfb2063a013.png" alt="image.png"></p>
-<p><strong>文件描述符</strong><br><img src="/2024/03/13/Linux/1686212395299-529bf8cb-9dd0-4ef2-ae7a-490cceeecbc9.png" alt="image.png"></p>
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">Hexo</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/linux/" style="font-size: 1.05rem;">linux<sup>1</sup></a><a href="/tags/%E5%AE%89%E5%85%A8%E4%BA%A7%E5%93%81/" style="font-size: 1.05rem;">安全产品<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>Archives</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">March 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">8</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="article-meta tags"><a class="article-meta__tags" href="/tags/linux/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>linux</span></a></span></div></div><h1 class="post-title" itemprop="name headline">Linux</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2024-03-13T15:25:57.000Z" title="Created 2024-03-13 23:25:57">2024-03-13</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2024-03-13T15:33:03.971Z" title="Updated 2024-03-13 23:33:03">2024-03-13</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为长沙"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>长沙</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2024/03/13/Linux/"><header><a href="/tags/linux/" tabindex="-1" itemprop="url">linux</a><h1 id="CrawlerTitle" itemprop="name headline">Linux</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">John Doe</span><time itemprop="dateCreated datePublished" datetime="2024-03-13T15:25:57.000Z" title="Created 2024-03-13 23:25:57">2024-03-13</time><time itemprop="dateCreated datePublished" datetime="2024-03-13T15:33:03.971Z" title="Updated 2024-03-13 23:33:03">2024-03-13</time></header><p>linux系统文件架构以及相应文件功能说明<br>文件IO与进程<strong>获取文件状态函数fcntl</strong><br><strong>错误处理函数</strong><br><strong>1.strerror(errno)    传入错误码转换成相应的错误信息</strong><br><strong>2.perror(“fopen err”)  打印错误原因的字符串</strong><br><strong>​</strong><br><strong>虚拟地址空间</strong><br><strong>32位机器，该地址空间为4G</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686211568855-c2bb53d1-b5fd-4aa5-9bc7-bdfb2063a013.png" alt="image.png"></p>
+<p><strong>文件描述符</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686212395299-529bf8cb-9dd0-4ef2-ae7a-490cceeecbc9.png" alt="image.png"></p>
 <p><strong>程序与进程</strong><br><strong>我们平时写的c语言代码，通过编译器编译，最终他会成为一个可执行进程，当这个可执行程序运行起来后，他就成为了一个进程</strong><br><strong>程序是存放在存储介质上的可执行文件，而进程是程序执行的过程，进程的状态是变化的，其包括进程的创建，调度，消亡</strong><br><strong>cpu分配资源的最小单位是进程</strong></p>
 <hr>
-<p><strong>并行：指在同一时刻，有多条指令在多个处理器上同时运行</strong><br><img src="/2024/03/13/Linux/1686213064677-3426ab6d-9a67-4fae-b864-089254649d10.png" alt="image.png"></p>
-<p><strong>并发：指在同一时刻只能有一条指令执行，但多个进程指令被快速的轮转执行，使得在宏观上具有多个进程同时执行的效果，但在微观上并不是同时执行的，只是把时间分成若干段，使多个进程快速交替的执行</strong><br><img src="/2024/03/13/Linux/1686213088754-688058ac-c88b-4d8b-a8c3-31ee53d1dfad.png" alt="image.png"></p>
-<p><strong>MMU（内存管理单元）:管理虚拟存储器，物理存储器的控制线路，虚拟地址映射为物理地址，提供硬件机制的内存访问</strong><br><strong>进程控制块(PCB)</strong><br><strong>进程运行时，内核为每一个进程分配一个PCB，维护进程相关的信息，Linux内核的进程控制块是task_stack结构体</strong><br><img src="/2024/03/13/Linux/1686213502823-f3164b48-9859-43ab-a74d-1e8ad694ed6e.png" alt="image.png"></p>
+<p><strong>并行：指在同一时刻，有多条指令在多个处理器上同时运行</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686213064677-3426ab6d-9a67-4fae-b864-089254649d10.png" alt="image.png"></p>
+<p><strong>并发：指在同一时刻只能有一条指令执行，但多个进程指令被快速的轮转执行，使得在宏观上具有多个进程同时执行的效果，但在微观上并不是同时执行的，只是把时间分成若干段，使多个进程快速交替的执行</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686213088754-688058ac-c88b-4d8b-a8c3-31ee53d1dfad.png" alt="image.png"></p>
+<p><strong>MMU（内存管理单元）:管理虚拟存储器，物理存储器的控制线路，虚拟地址映射为物理地址，提供硬件机制的内存访问</strong><br><strong>进程控制块(PCB)</strong><br><strong>进程运行时，内核为每一个进程分配一个PCB，维护进程相关的信息，Linux内核的进程控制块是task_stack结构体</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686213502823-f3164b48-9859-43ab-a74d-1e8ad694ed6e.png" alt="image.png"></p>
 <p><strong>与进程相关的命令</strong><br><strong>ps top kill killall</strong><br><strong>与进程相关的函数</strong><br><strong>getpid()   grtpgid(pid)</strong><br><strong>​</strong><br><strong>进程的创建</strong><br><strong>头文件 &lt;sys&#x2F;types.h&gt;</strong><br>**            &lt;unistd.h&gt;**<br><strong>​</strong><br><strong>pid_t fork(void);     用于从一个已存在的进程中创建一个新进程</strong><br><strong>​</strong><br><strong>父子进程数据遵循****读时共享，写时拷贝</strong><br><strong>区分父子进程</strong></p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//区分父子进程</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    pid_t pid = -1;</span><br><span class="line">    //创建一个子进程</span><br><span class="line">    pid = fork();</span><br><span class="line">    if(pid == 0)</span><br><span class="line">    &#123;</span><br><span class="line">        //子进程</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      //父进程</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#123;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2024/03/13/Linux/1686231433980-9392479c-7fa5-4c45-9bdb-fba453657ef9.png" alt="image.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686231433980-9392479c-7fa5-4c45-9bdb-fba453657ef9.png" alt="image.png"></p>
 <p>在父进程中创建子进程返回子进程的id，但在子进程中返回0</p>
-<p><strong>父子进程的地址空间</strong><br><img src="/2024/03/13/Linux/1686231854140-843ac560-1ada-4bea-ac99-e7147bee66b3.png" alt="image.png"></p>
+<p><strong>父子进程的地址空间</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686231854140-843ac560-1ada-4bea-ac99-e7147bee66b3.png" alt="image.png"></p>
 <p><strong>父子进程堆空间</strong><br><strong>查看内存泄露 valgrind .&#x2F;1.out</strong></p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">int num =100;</span><br><span class="line">int main()</span><br><span class="line">&#123;  int var =88;</span><br><span class="line">   int *p = malloc(sizeof(int));</span><br><span class="line">   memset(p,0,sizeof(int);</span><br><span class="line"></span><br><span class="line">   *p = 200;</span><br><span class="line"></span><br><span class="line">    //创建一个子进程</span><br><span class="line">    pid_t  pid = fork();</span><br><span class="line"></span><br><span class="line">    if(pid==-1)</span><br><span class="line">    &#123;</span><br><span class="line">    perror(<span class="string">&quot;fork fail&quot;</span>);</span><br><span class="line">    return 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if(pid == 0)</span><br><span class="line">    &#123;</span><br><span class="line">      //子进程</span><br><span class="line">      sleep(1);</span><br><span class="line">      printf(<span class="string">&quot;子进程睡醒之后 *p=%d num = %d var=%d\n&quot;</span>,*p,num,var);</span><br><span class="line">      free(p);</span><br><span class="line">      p = NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      //父进程</span><br><span class="line">      printf(<span class="string">&quot;父进程之前 *p = %d num = %d var=%d\n&quot;</span>,*p,num,var);</span><br><span class="line">      var++;</span><br><span class="line">      num++;</span><br><span class="line">      (*p)++;</span><br><span class="line">      printf(<span class="string">&quot;父进程之后 *p = %d num = %d var=%d\n&quot;</span>,*p,num,var);</span><br><span class="line">      free(p);</span><br><span class="line">      p=NULL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -159,20 +226,20 @@
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/wait.h&gt;</span></span><br><span class="line">pid_t wait(int *status);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>主要功能：回收已经结束子进程的资源</p>
-<p><strong>宏函数</strong><br><img src="/2024/03/13/Linux/1686303048890-40005cf4-8498-421b-ab8a-bc645eb84c27.png" alt="image.png"></p>
+<p><strong>宏函数</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686303048890-40005cf4-8498-421b-ab8a-bc645eb84c27.png" alt="image.png"></p>
 <p>wait()</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unisd.h&gt;</span></span><br><span class="line">int main()</span><br><span class="line">&#123;   int status = 0;</span><br><span class="line">    pid_t pid = fork();//创建子进程</span><br><span class="line">    if(pid == 0)</span><br><span class="line">    &#123;</span><br><span class="line">      for(int i=0;i&lt;5;i++)</span><br><span class="line">      &#123;</span><br><span class="line">       printf(<span class="string">&quot;child process do thing %d\n&quot;</span>,i+1);</span><br><span class="line">       sleep(1);</span><br><span class="line">      &#125;</span><br><span class="line">      exit(10);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //父进程执行</span><br><span class="line">    printf(<span class="string">&quot;父进程等待子进程退出，回收其资源&quot;</span>);</span><br><span class="line">    //父进程阻塞，等待子进程退出</span><br><span class="line">    int ret = wait(&amp;status);</span><br><span class="line">    if(ret == -1)</span><br><span class="line">    &#123;</span><br><span class="line">     perror(<span class="string">&quot;wait&quot;</span>);</span><br><span class="line">     return 1;</span><br><span class="line">    &#125;</span><br><span class="line">    printf(<span class="string">&quot;父进程回收了子进程的资源&quot;</span>);</span><br><span class="line"></span><br><span class="line">    //属于正常退出</span><br><span class="line">    if(WIFEXITED(status))</span><br><span class="line">    &#123;</span><br><span class="line">     printf(<span class="string">&quot;子进程退出状态码：%d\n&quot;</span>,WEXITSTATUS(status));</span><br><span class="line">    &#125;<span class="keyword">else</span> if(WIFSGNALED(status))</span><br><span class="line">    &#123;</span><br><span class="line">     printf(<span class="string">&quot;子进程被信号%d杀死了\n&quot;</span>,WTERMSIG(status));</span><br><span class="line">    &#125;<span class="keyword">else</span> if(WIFSTOPPED(status))</span><br><span class="line">    &#123;</span><br><span class="line">     printf(<span class="string">&quot;子进程被信号%d暂停\n&quot;</span>,WSTOPSIG(status));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>waitpid()函数</strong><br><img src="/2024/03/13/Linux/1686304121291-bd4fcf94-de0a-49c8-8096-c4927d904c33.png" alt="image.png"></p>
-<p><strong>孤儿进程</strong><br><img src="/2024/03/13/Linux/1686304539430-71f5e151-9d58-435b-adba-055e4df52553.png" alt="image.png"></p>
-<p><strong>僵尸进程</strong><br><img src="/2024/03/13/Linux/1686304647312-98a091b0-10dc-4cfc-be89-007e27ccf033.png" alt="image.png"></p>
+<p><strong>waitpid()函数</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686304121291-bd4fcf94-de0a-49c8-8096-c4927d904c33.png" alt="image.png"></p>
+<p><strong>孤儿进程</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686304539430-71f5e151-9d58-435b-adba-055e4df52553.png" alt="image.png"></p>
+<p><strong>僵尸进程</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686304647312-98a091b0-10dc-4cfc-be89-007e27ccf033.png" alt="image.png"></p>
 <p><strong>进程替换</strong><br>execlp()</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> printf(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line"> //arg0,arg1,arg2....argn</span><br><span class="line"> //arg0一般是可执行文件名，argn必须是NULL</span><br><span class="line"> //等价于ls -l /home</span><br><span class="line"> execlp(<span class="string">&quot;ls&quot;</span>,<span class="string">&quot;ls&quot;</span>,<span class="string">&quot;-l&quot;</span>,<span class="string">&quot;/home&quot;</span>,NULL);</span><br><span class="line"></span><br><span class="line"> printf(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"> return 0；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>execl()</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> printf(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line"> //arg0,arg1,arg2....argn</span><br><span class="line"> //arg0一般是可执行文件的绝对或者相对路径，argn必须是NULL</span><br><span class="line"> //等价于ls -l /home</span><br><span class="line"> execlp(<span class="string">&quot;/bin/ls&quot;</span>,<span class="string">&quot;ls&quot;</span>,<span class="string">&quot;-l&quot;</span>,<span class="string">&quot;/home&quot;</span>,NULL);</span><br><span class="line"></span><br><span class="line"> printf(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"> return 0；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2024/03/13/Linux/1686306770054-9967b6ab-fb6f-412e-b90a-9fffe150e57b.png" alt="image.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686306770054-9967b6ab-fb6f-412e-b90a-9fffe150e57b.png" alt="image.png"></p>
 <p><strong>在原进程中，如果exclp()执行成功，那么原来的进程就会被ls可执行文件整个替换，并从ls的main()函数开始执行，所以原进程中的printf(“hello”)已经被替换了，不会执行</strong><br>GDB调试器<strong>该程序是一个交互式工具，工作在字符模式除gdb外，linux下还有xxgdb，ddd，kgdb，ups等调试器</strong><br><strong>​</strong><br><strong>GCB主要功能：</strong><br><strong>1.启动程序，可以按照自定义要求随心所欲的运行程序</strong><br><strong>2.可以被调试的程序在你所指定的调置的断点处停住</strong><br><strong>3.当程序被停住时，可以检查此时你的程序中所发生的事</strong><br><strong>4.动态的改变你程序的执行环境</strong><br><strong>​</strong><br><strong>生成调试信息</strong><br><strong>在编译时，使用-g参数</strong><br><strong>gcc&#x2F;g++ -g 1.c -o 1</strong><br><strong>​</strong><br><strong>启动GDB</strong><br><strong>gdb program（执行文件）</strong><br><strong>设置运行参数 **<br><strong>set args 可指定运行时参数(如set args 10,20…)</strong><br><strong>show args   &#x2F;&#x2F;可以查看设置好的运行参数</strong><br><strong>启动程序</strong><br><strong>run  &#x2F;&#x2F;程序开始执行，如果有断点，停在第一个断点处</strong><br><strong>start &#x2F;&#x2F;程序向下执行一行</strong><br><strong>显示源代码</strong><br><strong>list linenum 打印第lineum行的上下文内容</strong><br><strong>list function 显示函数名为function的函数的源程序</strong><br><strong>list: 显示当前行后面的源程序</strong><br><strong>list-: 显示当前行前面的源程序</strong><br><strong>断点操作</strong><br><strong>break 设置断点，可以简写为b</strong><br><strong>b 10 设置断点，在源程序第10行</strong><br><strong>b func 设置断点，在func函数入口处</strong><br><strong>​</strong><br><strong>查询断点</strong><br><strong>info break</strong><br><strong>i b</strong><br><strong>i break</strong><br><strong>info b</strong><br><strong>​</strong><br><strong>多文件设置断点</strong><br><strong>break filename:lineum  –在源文件filename的lineum行处停住</strong><br><strong>break filename:function –在源文件filename的function函数的入口处停住</strong><br><strong>break class::function或function(type,type)  – 在类class的funtion函数的入口停住</strong><br><strong>break namespace::class::function –  在名称空间为namespace的类class的function函数的入口处停住</strong><br><strong>​</strong><br><strong>条件断点</strong><br><strong>break test.c:23 if i&#x3D;&#x3D;5</strong><br><strong>​</strong><br><strong>维护断点</strong><br><strong>delete break   删除断点</strong><br><strong>disable break  禁用断点</strong><br><strong>enable break   启用断点</strong><br><strong>​</strong><br><strong>调试代码</strong><br><strong>run <strong><strong>运行程序简写r</strong><br><strong>next <strong><strong>单步跟踪，函数调用当做一条简单语句执行，简写n</strong><br><strong>step</strong></strong> 单步跟踪，函数调用进入被调用函数体内，简写s</strong><br><strong>finish</strong></strong> 退出进入的函数</strong><br><strong>until</strong></strong> 在一个循环体内单步跟踪时，这个命令可以运行程序直到退出循环体，简写u**<br><strong>continue <strong><strong>继续运行程序，停在下一个短点的位置，简写c</strong><br><strong>quit</strong></strong> 退出gdb，简写q</strong><br><strong>​</strong><br><strong>数据查看</strong><br><strong>查看运行时数据print 简写p</strong><br><strong>​</strong><br><strong>自动显示</strong><br><strong>可以设置一些自动显示的变量</strong><br><strong>display 变量名</strong><br><strong>info display 查看display设置的自动显示的信息</strong><br><strong>undisplay  num</strong><br><strong>delete display dnums 删除自动显示</strong><br><strong>disable display dnums</strong><br><strong>enable display dnums</strong><br><strong>​</strong><br>linux中静态库的制作(.c .h)  编译时加载前缀：lib<br>后缀：.a<br><strong>将.c文件通过gcc命令生成.o文件之后（gcc -c 1.c -o 1.o）</strong><br><strong>使用ar命令</strong><br><strong>ar -rcs libtest.a  1.o 2.o 3.o 4.o</strong><br>linux中动态库的制作  运行时加载<br><strong>前缀：lib</strong><br><strong>后缀：.so</strong><br><strong>libxxx.so</strong><br><strong>动态库的制作：</strong><br><strong>步骤一：生成目标文件，编译时选项 -fpic</strong><br><strong>gcc -fpic -c 1.c</strong><br><strong>gcc -fpic -c 2.c</strong><br><strong>步骤二：生成共享库，链接选项-shared</strong><br><strong>gcc -shared 1.o 2.o -o libtest.so</strong><br><strong>步骤三：通过nm命令查看对应的函数</strong><br><strong>动态库的使用</strong></p>
 <p>makefile<strong>一个工程中的源文件不计其数，其按类型，功能，模块分别放在若干个目录中，makefile定义了一系列的规则来指定，哪些文件需要先编译，那些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作，因为Makefile就像shell脚本一样，其中也可以执行操作系统的命令</strong><br><strong>Makefile带来的好处就是——自动化编译</strong><br><strong>主要解决两个问题：</strong><br><strong>1）大量代码的关系维护</strong><br><strong>2) 减少重复编译时间</strong><br><strong>​</strong><br><strong>make工具安装linux</strong><br><strong>sudo apt install make</strong><br><strong>​</strong><br><strong>Makefile语法规则</strong><br><strong>一条规则</strong><br><strong>目标：依赖文件列表</strong><br><strong><tab>命令列表</tab></strong><br><strong>all:test</strong><br><strong>echo “hello world”</strong></p>
 <p><strong>Makefile基本规则三要素：</strong><br><strong>1.目标：</strong><br>**   通常是要产生的文件名称，目标可以是可执行文件或其他obj文件，也可以是一个动作名称**<br><strong>2.依赖文件：</strong><br>**   用来谁从而产生目标的文件**<br>**   一个目标通常有几个依赖文件**<br><strong>3.命令</strong><br>**   make执行的动作，一个规则可以含几个命令**<br>**   有多个命令时，每个命令占一行**<br><strong>​</strong><br><strong>make命令格式</strong><br><strong>make [-f file][option][targets]</strong><br><strong>option:</strong><br><strong>-v  显示make工具的版本信息</strong><br><strong>-w 在处理Makefile之前和之后的工作路径</strong><br><strong>-C dir 读取Makefile之前改变工作路径至dir目录</strong><br><strong>-n 只打印要执行的命令但不执行</strong><br><strong>-s 执行但不显示执行的命令</strong><br><strong>​</strong><br><strong>targets:</strong><br><strong>若指定make命令时没有指定目标，则make工具默认是文件得第一个目标</strong><br><strong>​</strong><br><strong>案例：</strong></p>
@@ -196,19 +263,19 @@
 <p><strong>特殊符号：</strong><br><strong>“-“  此命令出错make也会执行后续操作</strong><br><strong>“@” 不显示命令本身,只显示结果</strong></p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">src = <span class="variable">$(<span class="built_in">wildcard</span> *.c )</span></span><br><span class="line">OBJS  = <span class="variable">$(<span class="built_in">patsubst</span> %.c %.o ,<span class="variable">$(src)</span>)</span> </span><br><span class="line"></span><br><span class="line"><span class="section">test:<span class="variable">$(OBJS)</span></span></span><br><span class="line">	gcc <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line"> %.o:%.c</span><br><span class="line">     @gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">#声明clean为伪目标，伪目标不去判断目标文件是否存在或者已经更新</span></span><br><span class="line"> <span class="comment">#无条件执行命令</span></span><br><span class="line"> .PHONY:clean</span><br><span class="line"> clean:</span><br><span class="line">     -rm -rf <span class="variable">$(OBJS)</span> test</span><br></pre></td></tr></table></figure>
 
-<p>进程之间的通信进程是一个独立的组员分配单位，不同进程之间的资源是独立的，没有关联，不能在一个进程中直接访问另一个进程的资源<br>​<br><img src="/2024/03/13/Linux/1686307776228-3e0983c3-661c-4e0f-8de5-3ccbdf62c150.png" alt="image.png"></p>
+<p>进程之间的通信进程是一个独立的组员分配单位，不同进程之间的资源是独立的，没有关联，不能在一个进程中直接访问另一个进程的资源<br>​<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686307776228-3e0983c3-661c-4e0f-8de5-3ccbdf62c150.png" alt="image.png"></p>
 <p><strong>无名管道</strong><br><strong>管道也叫无名管道，他是unix系统ipc（进程间通信）的最古老形式，所有的unix系统都支持这种通信机制</strong><br><strong>管道有如下特点：</strong><br><strong>1）半双工，数据在同一时刻只能在一个方向上流动</strong><br><strong>2）数据只能从管道的一端写入，从另一端读出</strong><br><strong>3）写入管道中的数据遵循先入先出的规则</strong><br><strong>4）管道所传送的数据是无格式的，这要求管道的读出方式与写入方必须事先约定好数据的格式，如多少字节算一个消息等</strong><br><strong>5）管道不是普通的文件，不属于某个文件系统，其只存在于内存中</strong><br><strong>6）管道在内存中对应一个缓冲区，不同的系统其大小不一定相同</strong><br><strong>7）从管道读取数据是一次性操作，数据一旦被读走，它就从管道中被抛弃，释放空间以便写更多数据</strong><br><strong>8）管道没有名字，只能在具有公共祖先的进程之间使用</strong><br><strong>对于管道特点的理解，我们可以类比现实生活中管子，管子的一端塞东西，另一端取东西</strong><br><strong>​</strong><br><strong>PIPE 函数</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">pipe</span><span class="params">(<span class="type">int</span> pipefd[<span class="number">2</span>])</span></span>; <span class="comment">//创建无名管道</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/2024/03/13/Linux/1686308893519-b226bd52-a648-4f32-bb3d-f732875ecf93.png" alt="image.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686308893519-b226bd52-a648-4f32-bb3d-f732875ecf93.png" alt="image.png"></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sting.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> fds[<span class="number">2</span>];</span><br><span class="line">    <span class="type">int</span> ret = <span class="built_in">pipe</span>(fds);</span><br><span class="line">    <span class="keyword">if</span>(ret == <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;pipe&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//fds[0]用于读，fds[1]用于写</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;fds[0]:%d fds[1]:%d\n&quot;</span>,fds[<span class="number">0</span>],fds[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//关闭文件描述符</span></span><br><span class="line">    <span class="built_in">close</span>(fds[<span class="number">0</span>]);</span><br><span class="line">    <span class="built_in">close</span>(fds[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>父子进程通过无名管道通信</strong><br><strong>和文件的读写相似（<strong><strong>即使子进程先执行也会被管道阻塞等待父进程执行之后再执行读操作</strong></strong>）</strong><br><strong>设置非阻塞属性</strong><br><img src="/2024/03/13/Linux/1686367661535-3265a312-486e-4c8d-98de-5da574f5a05a.png" alt="image.png"></p>
+<p><strong>父子进程通过无名管道通信</strong><br><strong>和文件的读写相似（<strong><strong>即使子进程先执行也会被管道阻塞等待父进程执行之后再执行读操作</strong></strong>）</strong><br><strong>设置非阻塞属性</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686367661535-3265a312-486e-4c8d-98de-5da574f5a05a.png" alt="image.png"></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;unistd.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;string.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdlib.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SIZE 64</span></span><br><span class="line"><span class="comment">//父子进程使用无名管道进行通信</span></span><br><span class="line"><span class="comment">//父进程写管道，子进程读管道</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;   <span class="type">int</span> fds[<span class="number">2</span>];</span><br><span class="line">    <span class="type">char</span>  buf[SIZE];</span><br><span class="line">    <span class="type">pid_t</span>  pid = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">    <span class="comment">//创建无名管道</span></span><br><span class="line">    ret = <span class="built_in">pipe</span>(fds);</span><br><span class="line">    <span class="keyword">if</span>(ret == <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;pipe&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//创建子进程</span></span><br><span class="line">    pid = fork();</span><br><span class="line">    <span class="keyword">if</span>(pid == <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;fork&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//子进程</span></span><br><span class="line">    <span class="keyword">if</span>(pid == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//关闭写端</span></span><br><span class="line">        <span class="built_in">close</span>(fds[<span class="number">1</span>]);</span><br><span class="line">        <span class="built_in">memset</span>(buf,<span class="number">0</span>,SIZE);</span><br><span class="line">        <span class="comment">//读取管道内容</span></span><br><span class="line">        ret = <span class="built_in">read</span>(fds[<span class="number">0</span>],buf,SIZE);</span><br><span class="line">        <span class="keyword">if</span>(ret &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">perror</span>(<span class="string">&quot;error&quot;</span>);</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;child process buf:%s\n&quot;</span>,buf);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//关闭读端</span></span><br><span class="line">        <span class="built_in">close</span>(fds[<span class="number">0</span>]);</span><br><span class="line">        <span class="comment">//进程退出</span></span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//父进程</span></span><br><span class="line">    <span class="comment">//关闭读端</span></span><br><span class="line">    <span class="built_in">close</span>(fds[<span class="number">0</span>]);</span><br><span class="line">    ret = <span class="built_in">write</span>(fds[<span class="number">1</span>],<span class="string">&quot;ABCDEFGHIJK&quot;</span>,<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">if</span>(ret&lt;<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;error&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;parent process write len:%d&quot;</span>,ret);</span><br><span class="line">    <span class="comment">//关闭写端</span></span><br><span class="line">    <span class="built_in">close</span>(fds[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">test01</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><img src="/2024/03/13/Linux/1686319537542-eada4555-a12d-4216-9c94-6cb7ae683760.png" alt="image.png"></p>
-<p><img src="/2024/03/13/Linux/1686319584721-464e8db4-63f2-453d-aea1-df22fe22c93c.png" alt="image.png"></p>
-<p><img src="/2024/03/13/Linux/1686319740575-fbecd13e-7281-40f1-9287-a873ed005a2a.png" alt="image.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686319537542-eada4555-a12d-4216-9c94-6cb7ae683760.png" alt="image.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686319584721-464e8db4-63f2-453d-aea1-df22fe22c93c.png" alt="image.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686319740575-fbecd13e-7281-40f1-9287-a873ed005a2a.png" alt="image.png"></p>
 <p>**查看管道缓冲区的大小 **<strong>ulimit -a</strong><br><strong>查看管道缓冲区的函数</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">long</span> <span class="title">fpathconf</span><span class="params">(<span class="type">int</span> fd,<span class="type">int</span> name)</span></span>;</span><br><span class="line">功能：该函数可以通过name参数查看不同的属性值</span><br><span class="line">参数：</span><br><span class="line">     fd:文件描述符</span><br><span class="line">     name:</span><br><span class="line">         _PC_PIPE_BUF,查看管道缓冲区的大小</span><br><span class="line">         _PC_NAME_MAX，文件名字字节数的上限</span><br><span class="line">返回值：</span><br><span class="line">      成功：根据name返回的值的意义也不同</span><br><span class="line">      失败：<span class="number">-1</span></span><br></pre></td></tr></table></figure>
 
@@ -230,272 +297,191 @@
 <p> talkB.c</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;sys/types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;sys/stat.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;fcntl.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  SIZE 128</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> buf[SIZE];</span><br><span class="line">    <span class="comment">//先读后写</span></span><br><span class="line">    <span class="type">int</span> fdr = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> fdw = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">    <span class="comment">//以只读方式打开管道1</span></span><br><span class="line">    fdr = <span class="built_in">open</span>(<span class="string">&quot;fifo1&quot;</span>,O_RDONLY);</span><br><span class="line">    <span class="keyword">if</span>(fdr == <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;fifo1&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;以只读方式打开管道1&quot;</span>);</span><br><span class="line">    <span class="comment">//以只写方式打开管道2</span></span><br><span class="line">    fdw = <span class="built_in">open</span>(<span class="string">&quot;fifo2&quot;</span>,O_WRONLY);</span><br><span class="line">    <span class="keyword">if</span>(fdw == <span class="number">-1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;fifo2&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;以只写方式打开管道2&quot;</span>);</span><br><span class="line">    <span class="comment">//管道1进行读操作</span></span><br><span class="line">    <span class="comment">//管道2进行写操作</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">memset</span>(buf,<span class="number">0</span>,SIZE);</span><br><span class="line">        ret = <span class="built_in">read</span>(fdr,buf,SIZE);</span><br><span class="line">        <span class="keyword">if</span>(ret&lt;=<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">perror</span>(<span class="string">&quot;read&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;fifo1读取的内容为:%s\n&quot;</span>,buf);</span><br><span class="line"></span><br><span class="line">       <span class="built_in">memset</span>(buf,<span class="number">0</span>,SIZE);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;发消息：&quot;</span>);</span><br><span class="line">        <span class="built_in">fgets</span>(buf,SIZE,stdin);</span><br><span class="line">        <span class="keyword">if</span>(buf[<span class="built_in">strlen</span>(buf)<span class="number">-1</span>] == <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            buf[<span class="built_in">strlen</span>(buf)<span class="number">-1</span>]=<span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ret = <span class="built_in">write</span>(fdw,buf, <span class="built_in">strlen</span>(buf));</span><br><span class="line">        <span class="keyword">if</span>(ret &lt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">perror</span>(<span class="string">&quot;write&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;向fifo2中写入字节数：%d\n&quot;</span>,ret);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//关闭管道1，2</span></span><br><span class="line">    <span class="built_in">close</span>(fdr);</span><br><span class="line">    <span class="built_in">close</span>(fdw);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><strong>共享存储映射</strong><br><strong>存储映射I&#x2F;O使用一个磁盘文件与存储空间中的一个缓冲区相映射</strong><br><img src="/2024/03/13/Linux/1686380692097-6fc1f75b-ce0e-47c4-b654-63cfd02097ca.png" alt="image.png"></p>
-<p>于是当从缓冲区中读取数据，就相当于读文件中的相应字节。类似，将数据存入缓冲区，则相应的字节就自动写入文件，这样，就可以在不适用read和write函数的情况下，使用地址(指针)完成I&#x2F;O操作<br>​<br>共性内存可以说是最有用的进程间通信方式，也是最快的IPC形式，因为进程可以直接读写内存，而不需要任何数据的拷贝<br>​<br><strong>存储映射函数</strong><br><strong>（1）mmap函数</strong><br><img src="/2024/03/13/Linux/1686381061096-dc2b2dcb-8f5a-452b-9d59-fc647ca77dc1.png" alt="image.png"></p>
-<p><strong>munmap函数(断开映射区的连接)</strong><br><img src="/2024/03/13/Linux/1686382469931-77175205-4449-4f9e-b66c-4b861e06113f.png" alt="image.png"></p>
-<p>使用mmap函数<br><img src="/2024/03/13/Linux/1686382328704-c36b46ca-b3cc-4fb0-818b-87c1fded6ddf.png" alt="image.png"></p>
-<p><strong>映射区的注意事项:</strong><br><strong>1.创建映射区的过程中，隐含着一次对映射文件的读取</strong><br><strong>2.当MAP_SHARED时，要求：映射区的权限应&lt;&#x3D;文件打开的权限（出于对映射区的保护）。而MAP_PRIVATE则无所谓，因为mmap中的权限是对内存的限制。</strong><br><strong>3.映射区的释放与文件关闭无关，只要映射创立成功，文件可以立即关闭</strong><br><strong>4.特别注意，当映射文件大小为0时，不能创建映射区，所以，用于映射的文件必须要有实际大小，mmap使用常常会出现错误，通常是由于共享文件存储空间大小引起的</strong><br><strong>5.munmap传入的地址一定是mmap的返回地址，坚决杜绝指针++操作</strong><br><strong>6.如果文件偏移量，必须是4k的整数倍</strong><br><strong>7.mmap创建映射区出错率非常高，一定要检查返回值，确保映射区建立成功后再进行后续操作</strong><br><strong>​</strong><br><strong>父子进程借助存储映射区实现通信</strong><br><img src="/2024/03/13/Linux/1686574291798-f2a8c9ec-cd7e-492b-ad47-e912bb95173c.png" alt="image.png"></p>
+<p><strong>共享存储映射</strong><br><strong>存储映射I&#x2F;O使用一个磁盘文件与存储空间中的一个缓冲区相映射</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686380692097-6fc1f75b-ce0e-47c4-b654-63cfd02097ca.png" alt="image.png"></p>
+<p>于是当从缓冲区中读取数据，就相当于读文件中的相应字节。类似，将数据存入缓冲区，则相应的字节就自动写入文件，这样，就可以在不适用read和write函数的情况下，使用地址(指针)完成I&#x2F;O操作<br>​<br>共性内存可以说是最有用的进程间通信方式，也是最快的IPC形式，因为进程可以直接读写内存，而不需要任何数据的拷贝<br>​<br><strong>存储映射函数</strong><br><strong>（1）mmap函数</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686381061096-dc2b2dcb-8f5a-452b-9d59-fc647ca77dc1.png" alt="image.png"></p>
+<p><strong>munmap函数(断开映射区的连接)</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686382469931-77175205-4449-4f9e-b66c-4b861e06113f.png" alt="image.png"></p>
+<p>使用mmap函数<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686382328704-c36b46ca-b3cc-4fb0-818b-87c1fded6ddf.png" alt="image.png"></p>
+<p><strong>映射区的注意事项:</strong><br><strong>1.创建映射区的过程中，隐含着一次对映射文件的读取</strong><br><strong>2.当MAP_SHARED时，要求：映射区的权限应&lt;&#x3D;文件打开的权限（出于对映射区的保护）。而MAP_PRIVATE则无所谓，因为mmap中的权限是对内存的限制。</strong><br><strong>3.映射区的释放与文件关闭无关，只要映射创立成功，文件可以立即关闭</strong><br><strong>4.特别注意，当映射文件大小为0时，不能创建映射区，所以，用于映射的文件必须要有实际大小，mmap使用常常会出现错误，通常是由于共享文件存储空间大小引起的</strong><br><strong>5.munmap传入的地址一定是mmap的返回地址，坚决杜绝指针++操作</strong><br><strong>6.如果文件偏移量，必须是4k的整数倍</strong><br><strong>7.mmap创建映射区出错率非常高，一定要检查返回值，确保映射区建立成功后再进行后续操作</strong><br><strong>​</strong><br><strong>父子进程借助存储映射区实现通信</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686574291798-f2a8c9ec-cd7e-492b-ad47-e912bb95173c.png" alt="image.png"></p>
 <p><strong>不同进程使用存储映射区进行通信</strong><br><strong>原理一样，借助存储映射实现进程通信</strong><br><strong>​</strong><br><strong>匿名映射实现<strong><strong>父子</strong></strong>进程通信</strong><br>通过使用我们发现，使用映射区来完成文件读写操作十分方便，父子进程通信也比较容易，但缺陷是，每次创建映射区一定要依赖一个文件才能实现。<br>通常为了建立映射区要open一个temp文件，创建好了再unlink,close掉，比较麻烦，可以直接使用匿名映射来代替。<br>其实linux系统给我们提供了创建匿名映射区的方法，无需依赖一个文件即可创建映射区，同样需要借助标志位参数flag来指定<br>​<br><strong>使用MAP_ANONYMOUS(或MAP_ANON)</strong><br>*<em>int <em>p &#x3D; mmap(NULL,4,PORT_READ | PORT_WRITE, MAP_SHARED | <strong><strong>MAP_ANONYMOUS</strong></strong> , -1,0);</em></em></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//父子进程使用匿名映射进程间通信</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">pid_t</span> pid = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">void</span> *ddr =<span class="literal">NULL</span>;</span><br><span class="line">    <span class="comment">//1.创建匿名映射</span></span><br><span class="line">    addr = <span class="built_in">mmap</span>(<span class="literal">NULL</span>,<span class="number">4096</span>,PORT_READ | PORT_WRITE, MAP_SHARED | MAP_ANONYMOUS , <span class="number">-1</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span>(MAP_FAILED == addr)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">peror</span>(<span class="string">&quot;mmap&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//创建子进程</span></span><br><span class="line">    pid = fork();</span><br><span class="line">    <span class="keyword">if</span>(pid == <span class="number">-1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">peror</span>(<span class="string">&quot;fork&quot;</span>);</span><br><span class="line">        <span class="built_in">munmap</span>(addr,<span class="number">4096</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//父子进程通信</span></span><br><span class="line">    <span class="keyword">if</span>(pid == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//子进程写</span></span><br><span class="line">        <span class="built_in">memcpy</span>(addr,<span class="string">&quot;13343555555&quot;</span>,<span class="number">10</span>);</span><br><span class="line">        </span><br><span class="line">    &#125;<span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//父进程读</span></span><br><span class="line">        <span class="built_in">wait</span>(<span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;parent process %s\n&quot;</span>,(<span class="type">char</span> *)addr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//4.断开连接</span></span><br><span class="line">    <span class="built_in">munmap</span>(addr,<span class="number">4096</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>信号的概述</strong><br>信号是linux进程间通信的最古老的方式，信号时软件中断，他是在软件层次对中断机制的一种模拟，是一种异步通信的方式。<br>​<br><strong>信号的编号</strong><br><strong>kill -l</strong></p>
-<p>**信号四要素 **<br>每个信号必备4要素：<br>编号，名称，事件，默认处理动作<br>​<br><strong>SIGKILL 和SIGSTOP,不予许被忽略，停止</strong><br><strong>​</strong><br><strong>信号状态</strong><br><img src="/2024/03/13/Linux/1686577886397-2e9a662f-b7c5-4b36-8f26-1b146292def7.png" alt="image.png"></p>
-<p><strong>未决状态：没有被处理</strong><br><strong>递达状态：信号被处理了</strong><br><strong>信号产生函数</strong><br><strong>kill 函数</strong><br><img src="/2024/03/13/Linux/1686578280402-39a83d84-625e-46e9-a72a-60e8ce6f42cf.png" alt="image.png"></p>
-<p><strong>父进程杀死子进程</strong><br><img src="/2024/03/13/Linux/1686578643675-8756261e-12d4-4f1d-ac40-3f70f0a0b847.png" alt="image.png"></p>
-<p><strong>raise函数</strong><br><img src="/2024/03/13/Linux/1686578764711-2f7827c4-6a82-4373-8d3c-d6c319294537.png" alt="image.png"></p>
-<p><img src="/2024/03/13/Linux/1686578837750-207404f1-7ae0-42f0-97fa-3298c8d90d75.png" alt="image.png"></p>
-<p><strong>abort函数</strong><br><img src="/2024/03/13/Linux/1686579046918-72dd0974-511d-45f2-886d-87633da98ec8.png" alt="image.png"></p>
-<p><strong>alarm函数（闹钟）</strong><br><img src="/2024/03/13/Linux/1686579145861-72ef19ec-538b-4e66-aac7-17b9422cea00.png" alt="image.png"></p>
-<p><strong>setitimer函数（定时器）</strong><br><img src="/2024/03/13/Linux/1686579677707-b883d8e3-354c-4584-b4a0-f055986fb3b7.png" alt="image.png"></p>
-<p><img src="/2024/03/13/Linux/1686579716805-45ea07ac-f014-4824-8b6f-8e564d76bbd0.png" alt="image.png"></p>
-<p><strong>signal函数</strong><br><img src="/2024/03/13/Linux/1686580510886-1e5c76c1-10e1-449a-83d2-5e7387bb9723.png" alt="image.png"></p>
-<p><img src="/2024/03/13/Linux/1686580882200-4c2669cd-8352-4aa2-9b63-6f4d5ab3a425.png" alt="image.png"></p>
+<p>**信号四要素 **<br>每个信号必备4要素：<br>编号，名称，事件，默认处理动作<br>​<br><strong>SIGKILL 和SIGSTOP,不予许被忽略，停止</strong><br><strong>​</strong><br><strong>信号状态</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686577886397-2e9a662f-b7c5-4b36-8f26-1b146292def7.png" alt="image.png"></p>
+<p><strong>未决状态：没有被处理</strong><br><strong>递达状态：信号被处理了</strong><br><strong>信号产生函数</strong><br><strong>kill 函数</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686578280402-39a83d84-625e-46e9-a72a-60e8ce6f42cf.png" alt="image.png"></p>
+<p><strong>父进程杀死子进程</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686578643675-8756261e-12d4-4f1d-ac40-3f70f0a0b847.png" alt="image.png"></p>
+<p><strong>raise函数</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686578764711-2f7827c4-6a82-4373-8d3c-d6c319294537.png" alt="image.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686578837750-207404f1-7ae0-42f0-97fa-3298c8d90d75.png" alt="image.png"></p>
+<p><strong>abort函数</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686579046918-72dd0974-511d-45f2-886d-87633da98ec8.png" alt="image.png"></p>
+<p><strong>alarm函数（闹钟）</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686579145861-72ef19ec-538b-4e66-aac7-17b9422cea00.png" alt="image.png"></p>
+<p><strong>setitimer函数（定时器）</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686579677707-b883d8e3-354c-4584-b4a0-f055986fb3b7.png" alt="image.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686579716805-45ea07ac-f014-4824-8b6f-8e564d76bbd0.png" alt="image.png"></p>
+<p><strong>signal函数</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686580510886-1e5c76c1-10e1-449a-83d2-5e7387bb9723.png" alt="image.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686580882200-4c2669cd-8352-4aa2-9b63-6f4d5ab3a425.png" alt="image.png"></p>
 <p>使用signal捕捉超时函数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//信号处理函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> signo)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;捕捉到信号:%d\n&quot;</span>,signo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">itimerval</span> tmo;</span><br><span class="line">    <span class="comment">//第一次触发事件</span></span><br><span class="line">    tmo.it_value.tv_sec = <span class="number">3</span>;</span><br><span class="line">    tmo.it_value.tv_usec = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//设置触发周期</span></span><br><span class="line">    tmo.it_interval.tv_sec =<span class="number">2</span> ;</span><br><span class="line">    tmo.it_interval.tv_usec = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//捕捉信号</span></span><br><span class="line">    <span class="built_in">signal</span>(SIGALRM,fun);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置定时器</span></span><br><span class="line">    ret = <span class="built_in">setitimer</span>(ITIMER_REAL,&amp;tmo,<span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">-1</span> == ret )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;setitimer&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//进程收到闹钟超时信号之后就会终止该进程</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;按下任意键继续&quot;</span>);</span><br><span class="line">    <span class="built_in">getchar</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>信号集</strong><br><strong>信号集概述</strong><br><img src="/2024/03/13/Linux/1686581929980-576f0084-8aa4-4aef-9bc5-b688e43d74e0.png" alt="image.png"></p>
-<p><strong>sigprocmask函数</strong><br>信号阻塞集也称信号屏蔽集，信号掩码。每个进程都有一个阻塞集，创建子进程时将继承父进程的阻塞集，信号阻塞集用来描述那些信号递送到该进程的时候被阻塞<br>所谓阻塞并不是禁止传送信号，而是暂缓信号的传送，若将被阻塞的信号从信号阻塞集中删除，且对应的信号在阻塞时发生了，进程将收到相应的信号<br>我们可以通过sigprocmask()修改当前的信号掩码来改变信号的阻塞情况<br><img src="/2024/03/13/Linux/1686582673797-5b6548f4-3fda-4210-a8c4-f955623d8b93.png" alt="image.png"></p>
-<p>内核实现信号捕捉过程<br><img src="/2024/03/13/Linux/1686742683852-c13d1b33-1953-4343-8091-c8436eba318e.png" alt="image.png"></p>
-<p>信号捕捉(sigaction)<br><img src="/2024/03/13/Linux/1686743031032-a5e19f6c-b2a7-4735-a9c1-efb87367181e.png" alt="image.png"></p>
-<p>😲<br>linux网络编程桥接模式：虚拟机与物理机一样直连局域网<br>NAT模式：虚拟机和物理机之间通过一块虚拟的网关互联通信，<strong>虚拟机与物理机访问而不能与局域网中的其他主机直接互联，虚拟机是通过物理机中的网卡来实现与局域网中的其他主机通信。</strong><br><img src="/2024/03/13/Linux/1686756511113-45191e44-e002-4028-9fef-46aeccca7dcb.png" alt="image.png"></p>
-<p><strong>套接字（ip地址+端口号）</strong><br><strong>用于不通主机之间的通信</strong><br><img src="/2024/03/13/Linux/1686759032255-dc2edbc9-9409-49cd-b7de-7343f01ad9d3.png" alt="image.png"></p>
-<p>全双工通信<br>​<br><strong>字节序</strong><br><img src="/2024/03/13/Linux/1686759535842-b78c647d-64b8-4120-80c5-29f14ae1458a.png" alt="image.png"></p>
-<p><strong>ip转换</strong><br><strong>#include &lt;arpa&#x2F;inet.h&gt;</strong><br>**int inet_pton(int af,const char <em>src,void <em>dst);</em></em><br><strong>功能：将点分十进制串转成32网络大端的数据(“192.168.1.2”)</strong><br><strong>参数: af</strong><br><strong>AF_INET   IPV4</strong><br><strong>AF_INET6 IPV6</strong><br><strong>src：点分十进制串的首地址</strong><br><strong>dst:32位网络地址</strong><br><strong>成功返回1</strong><br><strong>​</strong><br><strong>#include &lt;arpa&#x2F;inet.h&gt;</strong><br>**const char *inet_ntop(int af,const void <strong><strong><strong>src</strong></strong>*,char *dst,socklen_t size);</strong><br><img src="/2024/03/13/Linux/1686760629624-1eb1ee8b-068a-433f-a05f-a9515598b4c6.png" alt="image.png"></p>
-<p>点分十进制串   -》点分十进制值   发送数据<br>点分十进制值   -》点分十进制串    接收数据<br><img src="/2024/03/13/Linux/1697544286517-8a1bb6f1-f118-4ac1-9df8-db1c967ccc70.png" alt="image.png"></p>
-<p>接受数据<br><img src="/2024/03/13/Linux/1697545645160-fd4c3779-1cc6-43ee-aaaa-bfa0de7e8ba5.png" alt="image.png"></p>
-<p>linux网络编程-IPv4套接字结构体网络通信协议三大问题    协议    ip    端口  -》封装成结构体<br><img src="/2024/03/13/Linux/1697545894123-6b6e51a5-5323-42ae-81a6-9fba6852ea79.png" alt="image.png"></p>
+<p><strong>信号集</strong><br><strong>信号集概述</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686581929980-576f0084-8aa4-4aef-9bc5-b688e43d74e0.png" alt="image.png"></p>
+<p><strong>sigprocmask函数</strong><br>信号阻塞集也称信号屏蔽集，信号掩码。每个进程都有一个阻塞集，创建子进程时将继承父进程的阻塞集，信号阻塞集用来描述那些信号递送到该进程的时候被阻塞<br>所谓阻塞并不是禁止传送信号，而是暂缓信号的传送，若将被阻塞的信号从信号阻塞集中删除，且对应的信号在阻塞时发生了，进程将收到相应的信号<br>我们可以通过sigprocmask()修改当前的信号掩码来改变信号的阻塞情况<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686582673797-5b6548f4-3fda-4210-a8c4-f955623d8b93.png" alt="image.png"></p>
+<p>内核实现信号捕捉过程<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686742683852-c13d1b33-1953-4343-8091-c8436eba318e.png" alt="image.png"></p>
+<p>信号捕捉(sigaction)<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686743031032-a5e19f6c-b2a7-4735-a9c1-efb87367181e.png" alt="image.png"></p>
+<p>😲<br>linux网络编程桥接模式：虚拟机与物理机一样直连局域网<br>NAT模式：虚拟机和物理机之间通过一块虚拟的网关互联通信，<strong>虚拟机与物理机访问而不能与局域网中的其他主机直接互联，虚拟机是通过物理机中的网卡来实现与局域网中的其他主机通信。</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686756511113-45191e44-e002-4028-9fef-46aeccca7dcb.png" alt="image.png"></p>
+<p><strong>套接字（ip地址+端口号）</strong><br><strong>用于不通主机之间的通信</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686759032255-dc2edbc9-9409-49cd-b7de-7343f01ad9d3.png" alt="image.png"></p>
+<p>全双工通信<br>​<br><strong>字节序</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686759535842-b78c647d-64b8-4120-80c5-29f14ae1458a.png" alt="image.png"></p>
+<p><strong>ip转换</strong><br><strong>#include &lt;arpa&#x2F;inet.h&gt;</strong><br>**int inet_pton(int af,const char <em>src,void <em>dst);</em></em><br><strong>功能：将点分十进制串转成32网络大端的数据(“192.168.1.2”)</strong><br><strong>参数: af</strong><br><strong>AF_INET   IPV4</strong><br><strong>AF_INET6 IPV6</strong><br><strong>src：点分十进制串的首地址</strong><br><strong>dst:32位网络地址</strong><br><strong>成功返回1</strong><br><strong>​</strong><br><strong>#include &lt;arpa&#x2F;inet.h&gt;</strong><br>**const char *inet_ntop(int af,const void <strong><strong><strong>src</strong></strong>*,char *dst,socklen_t size);</strong><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1686760629624-1eb1ee8b-068a-433f-a05f-a9515598b4c6.png" alt="image.png"></p>
+<p>点分十进制串   -》点分十进制值   发送数据<br>点分十进制值   -》点分十进制串    接收数据<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1697544286517-8a1bb6f1-f118-4ac1-9df8-db1c967ccc70.png" alt="image.png"></p>
+<p>接受数据<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1697545645160-fd4c3779-1cc6-43ee-aaaa-bfa0de7e8ba5.png" alt="image.png"></p>
+<p>linux网络编程-IPv4套接字结构体网络通信协议三大问题    协议    ip    端口  -》封装成结构体<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1697545894123-6b6e51a5-5323-42ae-81a6-9fba6852ea79.png" alt="image.png"></p>
 <p>sin_family:协议<br>sin_port:端口<br>sin_addr:ip</p>
-<p>通用套接字结构体<br><img src="/2024/03/13/Linux/1697546266850-48542ff2-a783-4102-a936-91ddced4f36d.png" alt="image.png"></p>
-<p>linux网络编程-tcp传输控制协议    特点：出错重传   每次发送都会受到确认帧   安全<br><img src="/2024/03/13/Linux/1697546514369-0287196f-3129-49af-8660-1881c9597d24.png" alt="image.png"></p>
-<p> 创建套接字api<br><img src="/2024/03/13/Linux/1697546660697-66c4a5ed-a0cc-40d6-a5c4-57a0ba4c53f7.png" alt="image.png"></p>
-<p>domain：协议  AF_INET<br>type:传输类型  tcp  udp<br><img src="/2024/03/13/Linux/1697546756918-4395c0bb-992c-4c60-bd30-0b6d877f5469.png" alt="image.png"></p>
-<p>上面只需组应用层的包<br>protocol:0<br>成功返回文件描述符<br>​<br>连接服务器api<br><img src="/2024/03/13/Linux/1697546872849-853e9b74-143a-4faa-b2ee-7228fd6a1ca9.png" alt="image.png"></p>
-<p>sockfd:socket套接字<br>addr:ipv4套接字结构体的地址<br>addrlen:ipv4套接字结构体的长度<br>​<br><img src="/2024/03/13/Linux/1697548468343-b6d714f3-f2cf-4b64-bd6a-ba95562543f7.png" alt="image.png"></p>
+<p>通用套接字结构体<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1697546266850-48542ff2-a783-4102-a936-91ddced4f36d.png" alt="image.png"></p>
+<p>linux网络编程-tcp传输控制协议    特点：出错重传   每次发送都会受到确认帧   安全<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1697546514369-0287196f-3129-49af-8660-1881c9597d24.png" alt="image.png"></p>
+<p> 创建套接字api<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1697546660697-66c4a5ed-a0cc-40d6-a5c4-57a0ba4c53f7.png" alt="image.png"></p>
+<p>domain：协议  AF_INET<br>type:传输类型  tcp  udp<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1697546756918-4395c0bb-992c-4c60-bd30-0b6d877f5469.png" alt="image.png"></p>
+<p>上面只需组应用层的包<br>protocol:0<br>成功返回文件描述符<br>​<br>连接服务器api<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1697546872849-853e9b74-143a-4faa-b2ee-7228fd6a1ca9.png" alt="image.png"></p>
+<p>sockfd:socket套接字<br>addr:ipv4套接字结构体的地址<br>addrlen:ipv4套接字结构体的长度<br>​<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/2024/03/13/Linux/1697548468343-b6d714f3-f2cf-4b64-bd6a-ba95562543f7.png" alt="image.png"></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//创建套接字</span></span><br><span class="line">	<span class="type">int</span> sock_fd;</span><br><span class="line">	sock_fd = <span class="built_in">socket</span>(AF_INET,SOCK_STREAM, <span class="number">0</span>);</span><br><span class="line">	<span class="comment">//链接服务器</span></span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> addr;</span><br><span class="line">	addr.sin_family = AF_INET;</span><br><span class="line">	addr.sin_port = <span class="number">80</span>;</span><br><span class="line">	<span class="built_in">inet_pton</span>(AF_INET, <span class="string">&quot;&quot;</span>, addr.sin_addr.s_addr);</span><br><span class="line">	<span class="built_in">connect</span>(AF_INET, (<span class="keyword">struct</span> sockaddr*)&amp;addr, <span class="built_in">sizeof</span>(addr));</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//读写数据</span></span><br><span class="line">	<span class="type">char</span> buf[<span class="number">1024</span>]=<span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> n = <span class="built_in">read</span>(STDIN_FILENO, buf, <span class="built_in">sizeof</span>(buf));</span><br><span class="line">		<span class="built_in">write</span>(sock_fd, buf,n);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">close</span>(sock_fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-      </section>
-
-      
-      
-        <nav class="article-nav">
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-    <div class="card-text">
-      
-        <a href="/2024/03/13/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%9F%BA%E7%A1%80/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">渗透测试基础</h2>
-        </a>
-      
-      <div class="card-text--row">Newer</div>
-    </div>
-  </article>
-</div>
-          
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-    <div class="card-text">
-      
-        <a href="/2024/03/13/%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8%E5%B1%82%E6%9C%8D%E5%8A%A1/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">相关应用层服务</h2>
-        </a>
-      
-      <div class="card-text--row">Older</div>
-    </div>
-  </article>
-</div>
-          
-        </nav>
-      
-
-      <section class="page-message-container layout-padding">
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">John Doe</div><div class="post-copyright__author_desc"></div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2024/03/13/Linux/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2024/03/13/Linux/')">Linux</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2024/03/13/Linux/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=Linux&amp;url=http://example.com/2024/03/13/Linux/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/linux/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>linux<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/13/%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8%E5%B1%82%E6%9C%8D%E5%8A%A1/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">相关应用层服务</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/13/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%9F%BA%E7%A1%80/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">渗透测试基础</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description"></div></div></div><div class="card-widget anzhiyu-right-widget" id="card-wechat" onclick="null"><div id="flip-wrapper"><div id="flip-content"><div class="face" style="background: url(https://bu.dusays.com/2023/01/13/63c02edf44033.png) center center / 100% no-repeat"></div><div class="back face" style="background: url(https://bu.dusays.com/2023/05/13/645fa415e8694.png) center center / 100% no-repeat"></div></div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/14/python-netcoding/" title="python-netcoding">python-netcoding</a><time datetime="2024-03-13T19:04:49.000Z" title="Created 2024-03-14 03:04:49">2024-03-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/14/Sqlmap%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" title="Sqlmap工具使用">Sqlmap工具使用</a><time datetime="2024-03-13T18:52:00.000Z" title="Created 2024-03-14 02:52:00">2024-03-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/13/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%9F%BA%E7%A1%80/" title="渗透测试基础">渗透测试基础</a><time datetime="2024-03-13T15:35:30.000Z" title="Created 2024-03-13 23:35:30">2024-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/13/Linux/" title="Linux">Linux</a><time datetime="2024-03-13T15:25:57.000Z" title="Created 2024-03-13 23:25:57">2024-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/13/%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8%E5%B1%82%E6%9C%8D%E5%8A%A1/" title="相关应用层服务">相关应用层服务</a><time datetime="2024-03-13T15:17:50.000Z" title="Created 2024-03-13 23:17:50">2024-03-13</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2024 By <a class="footer-bar-link" href="/" title="John Doe" target="_blank">John Doe</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">Articles</div><div class="length-num">8</div></a><a href="/tags/" title="tag"><div class="headline">Tags</div><div class="length-num">2</div></a><a href="/categories/" title="category"><div class="headline">Categories</div><div class="length-num">0</div></a></div><span class="sidebar-menu-item-title">Function</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="Display Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>Display Mode</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/linux/" style="font-size: 0.88rem;">linux<sup>1</sup></a><a href="/tags/%E5%AE%89%E5%85%A8%E4%BA%A7%E5%93%81/" style="font-size: 0.88rem;">安全产品<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button id="go-up" type="button" title="Back To Top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/01/2021 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
         
-
-
-  
-  
-
-  
-  
-
-
-      </section>
-    </div>
-    <div class="widget-info">
-      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-body">
-    
-      <img src="https://s.gravatar.com/avatar/2d6b803eea37de0257620d5fabee7e64?s=200&amp;r=g&amp;d=retro" class="soft-size--round soft-style--box" alt="Sukoshi">
-    
-    
-      <h2>Sukoshi</h2>
-    
-    
-      <p>贵在坚持</p>
-    
-
-    <div class="count-box">
-      <div class="count-box--item">
-        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
-</svg>
-        <span>8</span>
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-        0
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-        2
-      </div>
-    </div>
-  </div>
-</section>
-
-      
-
-      
-<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
-</svg>
-    <span>NOTICE</span>
-  </div>
-  <div class="widget-body">
-    <p>flex-block主题部分重构，详情查看https://github.com/miiiku/flex-block</p>
-  </div>
-</section>
-
-
-      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-    <span>CATEGORYS</span>
-  </div>
-  <div class="widget-body">
-    <ul class="categorys-list">
-      
-    </ul>
-  </div>
-</section>
-
-      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-    <span>TAGS</span>
-  </div>
-  <div class="widget-body">
-    <div class="tags-cloud">
-      <a href="/tags/linux/" style="font-size: 10px;" class="tags-cloud-0">linux</a> <a href="/tags/%E5%AE%89%E5%85%A8%E4%BA%A7%E5%93%81/" style="font-size: 10px;" class="tags-cloud-0">安全产品</a>
-    </div>
-  </div>
-</section>
-    </div>
-  </article>
-</div>
-
-    <!-- footer container -->
-<footer id="footer" class="footer">
-  <div class="footer-container">
-    
-    <div class="social-icons">
-      
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
         
-      
-        
-      
-        
-      
-        
-          <a href="https://github.com/miiiku/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
-</svg>
-          </a>
-        
-      
-        
-          <a href="https://twitter.com/guanquanhong" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-twitter" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M962.285714 233.142857q-38.285714 56-92.571429 95.428571 0.571429 8 0.571429 24 0 74.285714-21.714286 148.285714t-66 142-105.428571 120.285714-147.428571 83.428571-184.571429 31.142857q-154.857143 0-283.428571-82.857143 20 2.285714 44.571429 2.285714 128.571429 0 229.142857-78.857143-60-1.142857-107.428571-36.857143t-65.142857-91.142857q18.857143 2.857143 34.857143 2.857143 24.571429 0 48.571429-6.285714-64-13.142857-106-63.714286t-42-117.428571l0-2.285714q38.857143 21.714286 83.428571 23.428571-37.714286-25.142857-60-65.714286t-22.285714-88q0-50.285714 25.142857-93.142857 69.142857 85.142857 168.285714 136.285714t212.285714 56.857143q-4.571429-21.714286-4.571429-42.285714 0-76.571429 54-130.571429t130.571429-54q80 0 134.857143 58.285714 62.285714-12 117.142857-44.571429-21.142857 65.714286-81.142857 101.714286 53.142857-5.714286 106.285714-28.571429z"></path>
-</svg>
-          </a>
-        
-      
-    </div>
-     
-    <p>&copy; 2024 <a href="/" target="_blank">John Doe</a></p>
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.6.12",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
 
-    
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
 
-    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
 
-    <p>
-      <a href="javascript:;" id="theme-light">🌞 浅色</a>
-      <a href="javascript:;" id="theme-dark">🌛 深色</a>
-      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
-    </p>
-  </div>
-</footer>
-  </div>
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 John Doe 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
 
-  <div class="back-to-top-fixed soft-size--round soft-style--box">
-    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
-      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
-      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
-    </svg>
-  </div>
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
 
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
   
-  <!-- aplayer -->
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
 
+  typeof typed === 'object' && typed.destroy()
 
-<!-- dplayer -->
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
 
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
 
-<!-- copy button  -->
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
 
-<!-- https://clipboardjs.com/ -->
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
 
+  typeof panguInit === 'function' && panguInit()
 
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
 
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
 
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
 
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
 
-
-
-
-  
-
-
-  
-
-
-  
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-  
-  <!-- 尾部用户自定义相关内容 -->
-</body>
-</html>
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
