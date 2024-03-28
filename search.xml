@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>pcan</title>
+      <link href="/2024/03/28/pcan/"/>
+      <url>/2024/03/28/pcan/</url>
+      
+        <content type="html"><![CDATA[<hr><h4 id="can通信编程"><a href="#can通信编程" class="headerlink" title="can通信编程"></a>can通信编程</h4><p>在linux系统中会有can0（实际的物理连接就是外接硬件设备如PEAK-can）网卡，可以使用socketcan编程</p><p>1.<strong>加载CAN总线驱动程序</strong>   sudo modprobe can</p><p>2.<strong>创建CAN通道</strong>  sudo ip link set can0 type can bitrate 500000</p><p>3.<strong>验证CAN通道</strong>  ifconfig</p><p>SocketCAN对全平台支持都很好，除了Windows的丰富资料外，在Linux端只需安装net-tools和SocketCAN驱动，然后就可以使用utils的命令去控制。</p><h5 id="除了物理连接还有虚拟的网口，是在内存中模拟的-不过这无法接触到真实的can数据"><a href="#除了物理连接还有虚拟的网口，是在内存中模拟的-不过这无法接触到真实的can数据" class="headerlink" title="除了物理连接还有虚拟的网口，是在内存中模拟的,不过这无法接触到真实的can数据"></a>除了物理连接还有虚拟的网口，是在内存中模拟的,不过这无法接触到真实的can数据</h5><p>1.<strong>加载CAN总线驱动程序</strong>   sudo modprobe vcan</p><p>2.<strong>创建CAN通道</strong>  sudo ip link add dev vcan0 type vcan;sudo ip link set up vcan0</p><p>如果想要跨平台进行can通信可以使用python-can库或是usb-can进行上位机的开发</p><p>通过socketcan开发的简单案例</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> can</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 创建SocketCAN接口对象</span></span><br><span class="line">    bus = can.interface.Bus(channel=<span class="string">&#x27;can0&#x27;</span>, bustype=<span class="string">&#x27;socketcan&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 发送CAN消息</span></span><br><span class="line">    msg = can.Message(arbitration_id=<span class="number">0x123</span>, data=[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>], is_extended_id=<span class="literal">False</span>)</span><br><span class="line">    bus.send(msg)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 接收CAN消息</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        msg = bus.recv(timeout=<span class="number">1.0</span>)  <span class="comment"># 设置超时时间，单位为秒</span></span><br><span class="line">        <span class="keyword">if</span> msg <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Received:&quot;</span>, msg)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> pcan </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>车联网相关协议</title>
       <link href="/2024/03/14/%E8%BD%A6%E8%81%94%E7%BD%91%E7%9B%B8%E5%85%B3%E5%8D%8F%E8%AE%AE/"/>
       <url>/2024/03/14/%E8%BD%A6%E8%81%94%E7%BD%91%E7%9B%B8%E5%85%B3%E5%8D%8F%E8%AE%AE/</url>

@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>与服务器部署 | Hexo</title>
-  <meta name="keywords" content=" 配置 ">
-  <meta name="description" content="与服务器部署 | Hexo">
+  <title>pcan | Hexo</title>
+  <meta name="keywords" content=" pcan ">
+  <meta name="description" content="pcan | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -587,34 +587,26 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="docker容器-与服务器部署" class="article article-type-docker容器" itemscope itemprop="blogPost">
+        <article id="post-pcan" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">与服务器部署</h1>
+        <h1 class="article-title">pcan</h1>
     
     <div class="article-meta">
         
         
         
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="配置">配置</a>
-            
-        </span>
-        
         
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">配置</a>
+            <a class="color5">pcan</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-03-15 10:36:59'>2024-03-14 20:16</time>
+            Created At : <time class="date" title='Updated At: 2024-03-28 17:19:45'>2024-03-28 09:29</time>
         
     </div>
     <div class="article-meta">
@@ -636,7 +628,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#can%E9%80%9A%E4%BF%A1%E7%BC%96%E7%A8%8B"><span class="toc-text">can通信编程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%99%A4%E4%BA%86%E7%89%A9%E7%90%86%E8%BF%9E%E6%8E%A5%E8%BF%98%E6%9C%89%E8%99%9A%E6%8B%9F%E7%9A%84%E7%BD%91%E5%8F%A3%EF%BC%8C%E6%98%AF%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E6%A8%A1%E6%8B%9F%E7%9A%84-%E4%B8%8D%E8%BF%87%E8%BF%99%E6%97%A0%E6%B3%95%E6%8E%A5%E8%A7%A6%E5%88%B0%E7%9C%9F%E5%AE%9E%E7%9A%84can%E6%95%B0%E6%8D%AE"><span class="toc-text">除了物理连接还有虚拟的网口，是在内存中模拟的,不过这无法接触到真实的can数据</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -652,15 +644,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>docker命令大全</p>
-<p>docker容器的读物服务处于内网中，所以不能直接访问</p>
-<p><strong>通过轻量级服务器将内部docker服部署到公网ip上</strong>一.网络拓扑<br><img src="/2024/03/14/%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/1691242429846-3f1256c1-3797-4f35-8980-f5c9947c5823.png" alt="image.png"></p>
-<p>虽然主机A与Ubuntu处于同一个内网中，也可以直接访问Ubuntu的ip来访问网站<br>这么做的前提是在Ubuntu中开启了docker服务，相关命令在上面docker中有详细介绍<br>但是我的想法是将docker中的服务部署到公网中，使用公网ip访问网站，这么做是为了从外网打点进一步访问到ubuntu中其他内网主机，即横向渗透，进一步找到域控主机拿下域控主机。<br>但是这部分内容不会在这里介绍，这里只介绍如何将其部署到公网ip<br>二.购买服务器<br>作为测试，我购买了一个小型的轻量级服务器（Windows 12r）ip我这里就随机编一个了，你懂得如上图。<br>具体可以去腾讯云，阿里云等等，也可以买国外的<br>​<br>三.frp下载<br>我们需要下载frp来讲docker服务映射到公网服务器中<br>地址：<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a><br>下载之后，在对应的服务器中解压相应的版本，我这里是windows<br><img src="/2024/03/14/%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/1691243139228-c4f56efb-98cb-4d00-b484-7c814011addd.png" alt="image.png"></p>
-<p>在frps(服务端)中设置绑定端口 可以设定token对应密码<br>​<br>然后在客户端设置frpc(客户端)<br>我的客户端是Ubuntu的所以解压linux版本的fpr<br><img src="/2024/03/14/%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/1691244050828-485683ba-bd30-4ea8-a16e-1e5cb2cd2da7.png" alt="image.png"></p>
-<p>同样在fprc.ini中设置远程ip端口以及本地的端口服务以及远程端口<br>流程就是访问远程的80端口就会映射到本地的80端口服务中<br>​<br>分别在Windows与Ubuntu中开启服务<br>win：frps.exe  -c  frps.ini<br>ubuntu: .&#x2F;frpc  -c frpc.ini<br>​<br>成功<br><strong>注意：由于在Windows中的frps.ini中我设置的端口为7000，所以还需要在公网服务器中将7000打开并允许访问</strong><br><img src="/2024/03/14/%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/1691244331790-0fd5e0d7-3d22-4957-bac6-f19aeccfba82.png" alt="image.png"></p>
-<p><img src="/2024/03/14/%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/1691244216363-fb2d7552-093c-4312-b278-ced7c5265600.png" alt="image.png"></p>
-<p>四.访问网站<br>在主机A中访问公网的80端口即可访问到Ubuntu中的网站<br><img src="/2024/03/14/%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/1691244430312-e9b591a3-924f-4f47-aa6c-7650ad477837.png" alt="image.png"></p>
-<p>这样就将内网中服务部署到公网上了<br>​</p>
+        <hr>
+<h4 id="can通信编程"><a href="#can通信编程" class="headerlink" title="can通信编程"></a>can通信编程</h4><p>在linux系统中会有can0（实际的物理连接就是外接硬件设备如PEAK-can）网卡，可以使用socketcan编程</p>
+<p>1.<strong>加载CAN总线驱动程序</strong>   sudo modprobe can</p>
+<p>2.<strong>创建CAN通道</strong>  sudo ip link set can0 type can bitrate 500000</p>
+<p>3.<strong>验证CAN通道</strong>  ifconfig</p>
+<p>SocketCAN对全平台支持都很好，除了Windows的丰富资料外，在Linux端只需安装net-tools和SocketCAN驱动，然后就可以使用utils的命令去控制。</p>
+<h5 id="除了物理连接还有虚拟的网口，是在内存中模拟的-不过这无法接触到真实的can数据"><a href="#除了物理连接还有虚拟的网口，是在内存中模拟的-不过这无法接触到真实的can数据" class="headerlink" title="除了物理连接还有虚拟的网口，是在内存中模拟的,不过这无法接触到真实的can数据"></a>除了物理连接还有虚拟的网口，是在内存中模拟的,不过这无法接触到真实的can数据</h5><p>1.<strong>加载CAN总线驱动程序</strong>   sudo modprobe vcan</p>
+<p>2.<strong>创建CAN通道</strong>  sudo ip link add dev vcan0 type vcan;sudo ip link set up vcan0</p>
+<p>如果想要跨平台进行can通信可以使用python-can库或是usb-can进行上位机的开发</p>
+<p>通过socketcan开发的简单案例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> can</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 创建SocketCAN接口对象</span></span><br><span class="line">    bus = can.interface.Bus(channel=<span class="string">&#x27;can0&#x27;</span>, bustype=<span class="string">&#x27;socketcan&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 发送CAN消息</span></span><br><span class="line">    msg = can.Message(arbitration_id=<span class="number">0x123</span>, data=[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>], is_extended_id=<span class="literal">False</span>)</span><br><span class="line">    bus.send(msg)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 接收CAN消息</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        msg = bus.recv(timeout=<span class="number">1.0</span>)  <span class="comment"># 设置超时时间，单位为秒</span></span><br><span class="line">        <span class="keyword">if</span> msg <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Received:&quot;</span>, msg)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1514900020@qq.com </span>
