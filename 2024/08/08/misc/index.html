@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>misc | Hexo</title>
-  <meta name="keywords" content="">
+  <meta name="keywords" content=" CTF ">
   <meta name="description" content="misc | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
@@ -261,6 +261,21 @@
             
         
     
+        
+            
+                
+    <li>
+        <div data-rel="CTF">
+            
+            CTF
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
 </ul>
 <div class="left-bottom">
     <div class="menus">
@@ -372,6 +387,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>CTF</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>linux</a>
             </li>
         
@@ -391,9 +410,9 @@
     <nav id="title-list-nav">
         
         
-        <a  class="All "
+        <a  class="All CTF "
            href="/2024/08/08/misc/"
-           data-tag=""
+           data-tag="CTF"
            data-author="" >
             <span class="post-title" title="misc">misc</span>
             <span class="post-date" title="2024-08-08 13:02:47">2024/08/08</span>
@@ -650,11 +669,26 @@
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="CTF">CTF</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">CTF</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-08-08 13:02:47'>2024-08-08 13:02</time>
+            Created At : <time class="date" title='Updated At: 2024-08-08 17:51:04'>2024-08-08 13:02</time>
         
     </div>
     <div class="article-meta">
@@ -676,7 +710,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#MISC"><span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E9%9A%90%E5%86%99"><span class="toc-text">1.隐写</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-text">2.流量分析</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -693,6 +727,55 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
+<h4 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h4><h5 id="1-隐写"><a href="#1-隐写" class="headerlink" title="1.隐写"></a>1.隐写</h5><p>1.1条形码类型隐写</p>
+<p><img src="/2024/08/08/misc/%E6%96%91%E9%A9%AC%E6%96%91%E9%A9%AC.png" alt="斑马斑马"></p>
+<p>这是一个扫描条形码的隐写，使用在线工具</p>
+<p><a target="_blank" rel="noopener" href="https://online-barcode-reader.inliteresearch.com/">https://online-barcode-reader.inliteresearch.com/</a></p>
+<p><img src="/2024/08/08/misc/1.png" alt="1"></p>
+<p>可以看到直接flag就出来了</p>
+<p>1.2 qr类型隐写</p>
+<p>![1 2](misc&#x2F;1 2.png)</p>
+<p>使用stegsolve打开，当切换成red plane1时出现了一个二维码</p>
+<p><img src="/2024/08/08/misc/2.png" alt="2"></p>
+<p>将其保存下来使用clearimage进行信息扫描</p>
+<p><img src="/2024/08/08/misc/3.png" alt="3"></p>
+<p><img src="/2024/08/08/misc/4.png" alt="4"></p>
+<p>我们发现将16进制转为ascii码时，出现了flag与1.pyt猜测是一个.py程序，<strong>将其保存为.pyc 反编译成.py</strong></p>
+<p>-o outfile 必须先写，例如有⼀个 1.pyc，想反编译输 出⽂件为 1.py</p>
+<p>首先需要新建一个1.py</p>
+<p><img src="/2024/08/08/misc/5.png" alt="5"></p>
+<p><img src="/2024/08/08/misc/6.png" alt="6"></p>
+<p>1.3 图片隐写</p>
+<p><img src="/2024/08/08/misc/11.png" alt="11"></p>
+<p>拿到图片没有任何内容，根据之前的经验，查看图片属性没有任何信息，使用010 editor打开发现正常，接着使用stegsolve 打开切换发现到了falg</p>
+<p><img src="/2024/08/08/misc/10.png" alt="10"></p>
+<p>1.4 pdf类型隐写</p>
+<p>题目描述：</p>
+<p>01081522291516170310172431-050607132027262728-0102030209162330-02091623020310090910172423-02010814222930-0605041118252627-0203040310172431-0102030108152229151617-04050604111825181920-0108152229303124171003-261912052028211407-04051213192625</p>
+<p>将其分开</p>
+<p>01081522291516170310172431-</p>
+<p>050607132027262728-</p>
+<p>0102030209162330-</p>
+<p>02091623020310090910172423-</p>
+<p>02010814222930-</p>
+<p>0605041118252627-</p>
+<p>0203040310172431-</p>
+<p>0102030108152229151617-</p>
+<p>04050604111825181920-</p>
+<p>0108152229303124171003-</p>
+<p>261912052028211407-</p>
+<p>04051213192625</p>
+<p><img src="/2024/08/08/misc/12.png" alt="12"></p>
+<p>经过描述画图得到flag</p>
+<p><img src="/2024/08/08/misc/12.png" alt="12"></p>
+<h5 id="2-流量分析"><a href="#2-流量分析" class="headerlink" title="2.流量分析"></a>2.流量分析</h5><p>2.1 webshell 流量分析</p>
+<p><img src="/2024/08/08/misc/7.png" alt="7"></p>
+<p>拿到一个流量包，不知道怎么操作，首先过滤http ，由于是webshell型可以再加上shell</p>
+<p>即 http contains “shell”</p>
+<p><img src="/2024/08/08/misc/8.png" alt="8"></p>
+<p>这里有一个POST上传php，可以尝试去追踪其tcp流量</p>
+<p><img src="/2024/08/08/misc/9.png" alt="9"></p>
+<p>这里发现flag</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1514900020@qq.com </span>
