@@ -688,7 +688,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-08-08 17:54:11'>2024-08-08 13:02</time>
+            Created At : <time class="date" title='Updated At: 2024-08-09 11:12:28'>2024-08-08 13:02</time>
         
     </div>
     <div class="article-meta">
@@ -710,7 +710,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#MISC"><span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E9%9A%90%E5%86%99"><span class="toc-text">1.隐写</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-text">2.流量分析</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#MISC"><span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E9%9A%90%E5%86%99"><span class="toc-text">1.隐写</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-text">2.流量分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E5%AF%86%E7%A0%81%E8%A7%A3%E5%AF%86"><span class="toc-text">4.密码解密</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -768,6 +768,20 @@
 <p><img src="/2024/08/08/misc/12.png" alt="12"></p>
 <p>经过描述画图得到flag</p>
 <p><img src="/2024/08/08/misc/12.png" alt="12"></p>
+<p>1.5 图片隐写 </p>
+<p><img src="/2024/08/08/misc/18.png" alt="18"></p>
+<p>拿到的是一个bmp文件，首先拿到stegsolve 中，查看lsb隐写，发现没有。</p>
+<p>直接把文件丢到010editor中看到了passad</p>
+<p><img src="/2024/08/08/misc/19.png" alt="19"></p>
+<p>1.7 图片隐写-进阶</p>
+<p> 下载下来的文件为stego100</p>
+<p>将其放入到hex friend发现是一个png文件，所以将其另存为图片，并且在末尾发现了一个图片网址</p>
+<p><img src="/2024/08/08/misc/23.png" alt="23"></p>
+<p>将其下载下来备用，接着使用stegsolve打开stego100.png 通过调节发现了一个不完整的二维码</p>
+<p><img src="/2024/08/08/misc/24.png" alt="24"></p>
+<p>这里想到了刚才下载的图片，将其放入BComepare中进行比较得到一个完整的二维码，并且使用clearimage中扫描得到flag</p>
+<p><img src="/2024/08/08/misc/26.png" alt="26"></p>
+<p><img src="/2024/08/08/misc/27.png" alt="27"></p>
 <h5 id="2-流量分析"><a href="#2-流量分析" class="headerlink" title="2.流量分析"></a>2.流量分析</h5><p>2.1 webshell 流量分析</p>
 <p><img src="/2024/08/08/misc/7.png" alt="7"></p>
 <p>拿到一个流量包，不知道怎么操作，首先过滤http ，由于是webshell型可以再加上shell</p>
@@ -776,6 +790,20 @@
 <p>这里有一个POST上传php，可以尝试去追踪其tcp流量</p>
 <p><img src="/2024/08/08/misc/9.png" alt="9"></p>
 <p>这里发现flag</p>
+<p>2.2 流量分析</p>
+<p><img src="/2024/08/08/misc/15.png" alt="15"></p>
+<p>使用 strings 命令也没有找到flag，题目提供在<strong>文件中</strong>找到flag，推测存在包含文件，将其丢进binwalk</p>
+<p><img src="/2024/08/08/misc/16.png" alt="16"></p>
+<p>果然这里有一个pdf文件，直接打开或者使用foremost 分离出来</p>
+<p>foremost -T  目标文件</p>
+<p><img src="/2024/08/08/misc/17.png" alt="17"></p>
+<p>便找到了flag</p>
+<h5 id="4-密码解密"><a href="#4-密码解密" class="headerlink" title="4.密码解密"></a>4.密码解密</h5><p>4.1 brainfuck&#x2F;ook类型</p>
+<p><img src="/2024/08/08/misc/20.png" alt="20"></p>
+<p><img src="/2024/08/08/misc/21.png" alt="21"></p>
+<p>根据介绍，这是一个brainfuck类型的</p>
+<p>将其解密得到flag</p>
+<p><img src="/2024/08/08/misc/22.png" alt="22"></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1514900020@qq.com </span>
