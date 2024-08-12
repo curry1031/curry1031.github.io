@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>pcan | Hexo</title>
-  <meta name="keywords" content=" 车联网 ">
-  <meta name="description" content="pcan | Hexo">
+  <title>misc-encryption | Hexo</title>
+  <meta name="keywords" content=" CTF ">
+  <meta name="description" content="misc-encryption | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
@@ -688,26 +688,34 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-pcan" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-misc-encryption" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">pcan</h1>
+        <h1 class="article-title">misc-encryption</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="靶场练习">靶场练习</a>
+            
+        </span>
+        
         
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color4">车联网</a>
+            <a class="color4">CTF</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-07-09 21:10:34'>2024-03-28 09:29</time>
+            Created At : <time class="date" title='Updated At: 2024-08-12 16:28:24'>2024-08-12 16:13</time>
         
     </div>
     <div class="article-meta">
@@ -729,7 +737,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#can%E9%80%9A%E4%BF%A1%E7%BC%96%E7%A8%8B"><span class="toc-text">can通信编程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%99%A4%E4%BA%86%E7%89%A9%E7%90%86%E8%BF%9E%E6%8E%A5%E8%BF%98%E6%9C%89%E8%99%9A%E6%8B%9F%E7%9A%84%E7%BD%91%E5%8F%A3%EF%BC%8C%E6%98%AF%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E6%A8%A1%E6%8B%9F%E7%9A%84-%E4%B8%8D%E8%BF%87%E8%BF%99%E6%97%A0%E6%B3%95%E6%8E%A5%E8%A7%A6%E5%88%B0%E7%9C%9F%E5%AE%9E%E7%9A%84can%E6%95%B0%E6%8D%AE"><span class="toc-text">除了物理连接还有虚拟的网口，是在内存中模拟的,不过这无法接触到真实的can数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#can-python-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">can python 数据结构</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E5%AF%86%E7%A0%81-%E7%BC%96%E7%A0%81%E8%A7%A3%E5%AF%86"><span class="toc-text">4.密码&#x2F;编码解密</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -746,21 +754,23 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h4 id="can通信编程"><a href="#can通信编程" class="headerlink" title="can通信编程"></a>can通信编程</h4><p>在linux系统中会有can0（实际的物理连接就是外接硬件设备如PEAK-can）网卡，可以使用socketcan编程</p>
-<p>1.<strong>加载CAN总线驱动程序</strong>   sudo modprobe can</p>
-<p>2.<strong>创建CAN通道</strong>  sudo ip link set can0 type can bitrate 500000</p>
-<p>3.<strong>验证CAN通道</strong>  ifconfig</p>
-<p>SocketCAN对全平台支持都很好，除了Windows的丰富资料外，在Linux端只需安装net-tools和SocketCAN驱动，然后就可以使用utils的命令去控制。</p>
-<h5 id="除了物理连接还有虚拟的网口，是在内存中模拟的-不过这无法接触到真实的can数据"><a href="#除了物理连接还有虚拟的网口，是在内存中模拟的-不过这无法接触到真实的can数据" class="headerlink" title="除了物理连接还有虚拟的网口，是在内存中模拟的,不过这无法接触到真实的can数据"></a>除了物理连接还有虚拟的网口，是在内存中模拟的,不过这无法接触到真实的can数据</h5><p>1.<strong>加载CAN总线驱动程序</strong>   sudo modprobe vcan</p>
-<p>2.<strong>创建CAN通道</strong>  sudo ip link add dev vcan0 type vcan;sudo ip link set up vcan0</p>
-<p>如果想要跨平台进行can通信可以使用python-can库或是usb-can进行上位机的开发</p>
-<p>通过socketcan开发的简单案例</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> can</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 创建SocketCAN接口对象</span></span><br><span class="line">    bus = can.interface.Bus(channel=<span class="string">&#x27;can0&#x27;</span>, bustype=<span class="string">&#x27;socketcan&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 发送CAN消息</span></span><br><span class="line">    msg = can.Message(arbitration_id=<span class="number">0x123</span>, data=[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>], is_extended_id=<span class="literal">False</span>)</span><br><span class="line">    bus.send(msg)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 接收CAN消息</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        msg = bus.recv(timeout=<span class="number">1.0</span>)  <span class="comment"># 设置超时时间，单位为秒</span></span><br><span class="line">        <span class="keyword">if</span> msg <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Received:&quot;</span>, msg)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="can-python-数据结构"><a href="#can-python-数据结构" class="headerlink" title="can python 数据结构"></a>can python 数据结构</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">  <span class="comment"># pylint: disable=too-many-locals, too-many-arguments</span></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        timestamp: <span class="built_in">float</span> = <span class="number">0.0</span>,   <span class="comment">#时间戳</span></span></span><br><span class="line"><span class="params">        arbitration_id: <span class="built_in">int</span> = <span class="number">0</span>,  <span class="comment">#仲裁ID</span></span></span><br><span class="line"><span class="params">        is_extended_id: <span class="built_in">bool</span> = <span class="literal">True</span>,   <span class="comment">#是否是扩展帧</span></span></span><br><span class="line"><span class="params">        is_remote_frame: <span class="built_in">bool</span> = <span class="literal">False</span>, <span class="comment">#是否是远程帧</span></span></span><br><span class="line"><span class="params">        is_error_frame: <span class="built_in">bool</span> = <span class="literal">False</span>,  <span class="comment">#是否是错误帧</span></span></span><br><span class="line"><span class="params">        channel: <span class="type">Optional</span>[typechecking.Channel] = <span class="literal">None</span>,</span></span><br><span class="line"><span class="params">        dlc: <span class="type">Optional</span>[<span class="built_in">int</span>] = <span class="literal">None</span>,  <span class="comment">#数据帧长度</span></span></span><br><span class="line"><span class="params">        data: <span class="type">Optional</span>[typechecking.CanData] = <span class="literal">None</span>, <span class="comment">#数据内容</span></span></span><br><span class="line"><span class="params">        is_fd: <span class="built_in">bool</span> = <span class="literal">False</span>,  </span></span><br><span class="line"><span class="params">        is_rx: <span class="built_in">bool</span> = <span class="literal">True</span>,</span></span><br><span class="line"><span class="params">        bitrate_switch: <span class="built_in">bool</span> = <span class="literal">False</span>,</span></span><br><span class="line"><span class="params">        error_state_indicator: <span class="built_in">bool</span> = <span class="literal">False</span>,</span></span><br><span class="line"><span class="params">        check: <span class="built_in">bool</span> = <span class="literal">False</span>,</span></span><br><span class="line"><span class="params">    </span>):</span><br></pre></td></tr></table></figure>
-
+<h5 id="4-密码-编码解密"><a href="#4-密码-编码解密" class="headerlink" title="4.密码&#x2F;编码解密"></a>4.密码&#x2F;编码解密</h5><p>4.1 brainfuck&#x2F;ook类型</p>
+<p><img src="/2024/08/12/misc-encryption/20.png" alt="20"></p>
+<p><img src="/2024/08/12/misc-encryption/21.png" alt="21"></p>
+<p>根据介绍，这是一个brainfuck类型的</p>
+<p>将其解密得到flag</p>
+<p><img src="/2024/08/12/misc-encryption/22.png" alt="22"></p>
+<p>4.2 编码转换类型</p>
+<p>下载得到misc10，使用hex friend打开是一个16进制串，并不是文件，所以对其进行进制转换得到flag</p>
+<p><img src="/2024/08/12/misc-encryption/30.png" alt="30"></p>
+<p>4.3 AES加密</p>
+<p>下载下来的图片为.gif文件，进过分解得到</p>
+<p><img src="/2024/08/12/misc-encryption/38.png" alt="38"></p>
+<p>根据结果，猜测ISCC为密钥</p>
+<p>将其丢进去hex friend 发现一串类似加密的字符串</p>
+<p><img src="/2024/08/12/misc-encryption/39.png" alt="39"></p>
+<p>经过两次的AES解密得到flag</p>
+<p><img src="/2024/08/12/misc-encryption/40.png" alt="40"></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1514900020@qq.com </span>
