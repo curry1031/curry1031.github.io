@@ -6,15 +6,27 @@
   <meta name="keywords" content=" 配置 ">
   <meta name="description" content="内网渗透中的一些配置 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://example.com/about/index.html">
+<meta name="description" content="前置基础知识了解目前pwn 大多针对c语言（因为c语言比较古老）c语言执行过程：  首先是c语言源代码经过编译编程汇编代码 汇编代码再经过汇编变成目标文件 目标文件通过动态&#x2F;静态连接 成为可执行文件（linux-&gt;elf，windows-&gt;exe）  c语言作为编译型语言，pyhton作为解释型语言，相比来说c语言执行速度更快 并且汇编代码&lt;–&gt;机器码 可以映射">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pwn">
+<meta property="og:url" content="http://example.com/2024/08/13/pwn/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前置基础知识了解目前pwn 大多针对c语言（因为c语言比较古老）c语言执行过程：  首先是c语言源代码经过编译编程汇编代码 汇编代码再经过汇编变成目标文件 目标文件通过动态&#x2F;静态连接 成为可执行文件（linux-&gt;elf，windows-&gt;exe）  c语言作为编译型语言，pyhton作为解释型语言，相比来说c语言执行速度更快 并且汇编代码&lt;–&gt;机器码 可以映射">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-03-15T01:26:37.000Z">
-<meta property="article:modified_time" content="2024-03-15T01:27:25.801Z">
+<meta property="og:image" content="http://example.com/2024/08/13/pwn/1.png">
+<meta property="og:image" content="http://example.com/2024/08/13/pwn/2.png">
+<meta property="og:image" content="http://example.com/2024/08/13/pwn/3.png">
+<meta property="og:image" content="http://example.com/2024/08/13/pwn/4.png">
+<meta property="og:image" content="http://example.com/2024/08/13/pwn/5.png">
+<meta property="og:image" content="http://example.com/2024/08/13/pwn/6.png">
+<meta property="og:image" content="http://example.com/2024/08/13/pwn/7.png">
+<meta property="og:image" content="http://example.com/2024/08/13/pwn/8.png">
+<meta property="article:published_time" content="2024-08-13T01:26:47.000Z">
+<meta property="article:modified_time" content="2024-08-14T08:16:33.095Z">
 <meta property="article:author" content="Curry">
+<meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/08/13/pwn/1.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -151,7 +163,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(29)</small>
+                <small>(30)</small>
             
         </div>
     </li>
@@ -268,7 +280,7 @@
         <div data-rel="CTF">
             
             CTF
-            <small>(4)</small>
+            <small>(5)</small>
         </div>
         
     </li>
@@ -296,7 +308,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="29">
+<input type="hidden" id="yelog_site_posts_number" value="30">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -408,6 +420,15 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All CTF "
+           href="/2024/08/13/pwn/"
+           data-tag="CTF"
+           data-author="" >
+            <span class="post-title" title="pwn">pwn</span>
+            <span class="post-date" title="2024-08-13 09:26:47">2024/08/13</span>
+        </a>
         
         
         <a  class="All CTF "

